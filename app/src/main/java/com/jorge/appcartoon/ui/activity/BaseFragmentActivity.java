@@ -3,13 +3,14 @@ package com.jorge.appcartoon.ui.activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.View;
 
 /**
  * @author：Jorge on 2015/11/10 15:06
  */
-public class BaseFragmentActivity extends FragmentActivity {
+public class BaseFragmentActivity extends AppCompatActivity {
 
     /** 记录处于前台的Activity */
     private static BaseFragmentActivity mForegroundActivity = null;
