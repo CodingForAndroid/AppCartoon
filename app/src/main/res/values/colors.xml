@@ -24,4 +24,5 @@
     <color name="comm_gray_low_small">#f4f4f4</color>
     <color name="half_transparent">#40ffffff</color>
     <color name="second_progress_color">#0683A3</color>
+    <color name="reveal_color">#3b4169E1</color>
 </resources>

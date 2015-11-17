@@ -1,25 +1,23 @@
 package com.jorge.appcartoon;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.jorge.appcartoon.ui.activity.BaseFragmentActivity;
 import com.jorge.appcartoon.ui.fragment.TabFragment;
 import com.jorge.appcartoon.util.UIUtils;
 import com.konifar.fab_transformation.FabTransformation;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
-
 /**
  * 主Activity
  */
@@ -44,6 +42,13 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initViews();
@@ -54,7 +59,6 @@ public class MainActivity extends BaseFragmentActivity {
      * 添加tab fragment
      */
     private void initViews() {
-        getSupportActionBar().hide();
         TabFragment tabFragment = new TabFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.content_frame, tabFragment, tabFragment.getClass().getName()).commit();

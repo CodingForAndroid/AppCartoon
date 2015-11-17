@@ -1,0 +1,133 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:title=" "
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@mipmap/icon_ins_left_arrow_2x"
+        android:minHeight="?attr/actionBarSize">
+        <TextView
+            android:textColor="@color/blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="AppCartoon"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </android.support.v7.widget.Toolbar>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swipe">
+ <ScrollView
+     android:id="@+id/scroll_view"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content">
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="vertical">
+
+         <com.jorge.appcartoon.widget.RevealLayout
+             android:id="@+id/layout1"
+             android:orientation="vertical"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content" >
+
+             <RelativeLayout
+
+                 android:background="@drawable/shape_ins_bg_purple_blue"
+                 android:layout_width="fill_parent"
+                 android:layout_height="@dimen/cart_ins_height">
+
+                 <ImageView
+                     android:layout_marginLeft="@dimen/activity_vertical_margin"
+                     android:layout_centerVertical="true"
+                     android:src="@mipmap/ic_launcher"
+                     android:id="@+id/iv_cover"
+                     android:layout_width="100dp"
+                     android:layout_height="130dp" />
+
+
+                <ImageView
+                    android:contentDescription="@string/copy_right"
+                    android:id="@+id/iv_copyright"
+                    android:src="@mipmap/icon_ins_logo_2x"
+                    android:layout_marginTop="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                 <LinearLayout
+                     android:layout_centerVertical="true"
+                     android:orientation="vertical"
+                     android:layout_toRightOf="@+id/iv_cover"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+                     <TextView
+                        style="@style/cart_ins_txt_style"
+                         android:id="@+id/tv_author"
+                         android:text="  作者"
+                         android:drawableLeft="@mipmap/icon1_ins_author_2x"/>
+                     <TextView
+                         style="@style/cart_ins_txt_style"
+                         android:id="@+id/tv_type"
+                         android:text=" 冒险、格斗" />
+                     <TextView
+                         style="@style/cart_ins_txt_style"
+                         android:id="@+id/tv_hot"
+                         android:text=" 点击 99999" />
+                     <TextView
+                         style="@style/cart_ins_txt_style"
+                         android:id="@+id/tv_subscribe"
+                         android:text=" 订阅 99999" />
+                     <TextView
+                         style="@style/cart_ins_txt_style"
+                         android:id="@+id/tv_update_time"
+                         android:text=" 2015-10-10 10:10"
+                         android:drawableLeft="@mipmap/icon3_ins_time_2x"/>
+                     <LinearLayout
+                         android:layout_margin="5dp"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content">
+                         <Button
+                             android:textColor="@color/white"
+                             android:singleLine="true"
+                             android:background="@drawable/shape_rectangle_blue"
+                             android:text="@string/txt_subscribe"
+                             android:layout_width="wrap_content"
+                             android:layout_height="@dimen/button_height"  />
+                         <Button
+                             android:layout_marginLeft="@dimen/button_margin"
+                             android:textColor="@color/white"
+                             android:singleLine="true"
+                             android:background="@drawable/shape_ins_rectangle_stroke_white"
+                             android:text="@string/txt_continue_watch"
+                             android:layout_width="wrap_content"
+                             android:layout_height="@dimen/button_height" />
+                     </LinearLayout>
+                 </LinearLayout>
+             </RelativeLayout>
+         </com.jorge.appcartoon.widget.RevealLayout>
+
+     </LinearLayout>
+ </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="@android:style/Widget.ProgressBar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:indeterminate="false"
+        android:indeterminateDrawable="@drawable/loading"
+        android:padding="5dp"
+        android:visibility="gone" />
+</RelativeLayout>
