@@ -18,7 +18,7 @@ import java.util.Properties;
  */
 public class FileUtils {
 
-	public static final String ROOT_DIR = "WC";
+	public static final String ROOT_DIR = "AppCartoon";
 	public static final String DOWNLOAD_DIR = "download";
 	public static final String CACHE_DIR = "cache";
 	public static final String ICON_DIR = "pics";

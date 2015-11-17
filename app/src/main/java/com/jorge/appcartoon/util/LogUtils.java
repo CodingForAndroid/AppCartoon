@@ -29,7 +29,7 @@ public class LogUtils {
 	public static final int LEVEL_ERROR = 5;
 
 	/** 日志输出时的TAG */
-	private static String mTag = "widgetcollections";
+	private static String mTag = "AppCartoon";
 	/** 是否允许输出log */
 	private static int mDebuggable = LEVEL_ERROR;
 

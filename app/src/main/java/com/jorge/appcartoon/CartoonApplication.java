@@ -3,8 +3,14 @@ package com.jorge.appcartoon;
 import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
-
 import com.jorge.appcartoon.http.HttpUtil;
+import com.jorge.appcartoon.util.FileUtils;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.io.File;
 
@@ -63,17 +69,17 @@ public class CartoonApplication extends Application {
 
 
     public void initImageLoader(){
-//        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mInstance)
-//                .threadPriority(Thread.NORM_PRIORITY + 2)
-//                .denyCacheImageMultipleSizesInMemory()
-//                .threadPoolSize(10)
-//                .discCacheFileNameGenerator(new Md5FileNameGenerator())
-//                .tasksProcessingOrder(QueueProcessingType.LIFO)
-//                .diskCache(new UnlimitedDiskCache(new File(FileUtils.getIconDir())))
-//                .memoryCache(new LRULimitedMemoryCache(2*1024*1024))
-//                .build();
-//
-//        ImageLoader.getInstance().init(config);
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mInstance)
+                .threadPriority(Thread.NORM_PRIORITY + 2)
+                .denyCacheImageMultipleSizesInMemory()
+                .threadPoolSize(10)
+                .discCacheFileNameGenerator(new Md5FileNameGenerator())
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .diskCache(new UnlimitedDiskCache(new File(FileUtils.getIconDir())))
+                .memoryCache(new LRULimitedMemoryCache(2*1024*1024))
+                .build();
+
+        ImageLoader.getInstance().init(config);
     }
     public void exitApp() {
         System.gc();

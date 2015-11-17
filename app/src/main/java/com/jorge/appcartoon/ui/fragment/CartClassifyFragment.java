@@ -1,8 +1,11 @@
 package com.jorge.appcartoon.ui.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.jorge.appcartoon.R;
+import com.jorge.appcartoon.util.UIUtils;
+import com.jorge.appcartoon.widget.LoadingPage;
 
 /**
  *  漫画——分类
@@ -10,19 +13,20 @@ import com.jorge.appcartoon.R;
  */
 public class CartClassifyFragment extends  BaseFragment {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_recommend);
-    }
 
     @Override
-    public void initViews() {
+    protected void initViewsAndEvents() {
 
     }
 
     @Override
-    public void addListener() {
+    protected LoadingPage.LoadResult load() {
+        return LoadingPage.LoadResult.SUCCEED;
+    }
 
+    @Override
+    protected View createLoadedView() {
+//        setContentView(R.layout.fragment_recommend);
+        return UIUtils.inflate(R.layout.fragment_recommend);
     }
 }

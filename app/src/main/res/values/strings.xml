@@ -8,6 +8,24 @@
     <string name="txt_tab_novel">小说</string>
     <string name="txt_tab_news">新闻</string>
     <string name="txt_tab_mine">我的</string>
-    <string name="txt_recommend">推荐</string>
 
+    <string name="txt_recommend">推荐</string>
+    <string name="load_error">加载失败,点击重试</string>
+    <!--漫画介绍页-->
+    <string name="copy_right">所属权</string>
+    <string name="txt_subscribe">订阅漫画</string>
+    <string name="txt_continue_watch">继续观看</string>
+    <string name="txt_work_ins">作品介绍</string>
+    <string name="txt_author_ins">作者公告</string>
+    <string name="txt_book_mark">&#160;查看书签</string>
+    <string name="txt_book_list">&#160;加入书单</string>
+    <string name="txt_relative_subject">&#160;相关内容</string>
+    <string name="txt_share">&#160;分享(78)</string>
+    <string name="txt_cart_chapter">漫画章节</string>
+    <string name="txt_positive_order">正序&#160;&#160;</string>
+    <string name="txt_reverse_order">&#160;&#160;倒序</string>
+    <string name="txt_discuss">作品讨论(%s)</string>
+    <string name="txt_new_discuss">发表新帖</string>
+    <string name="txt_whole">&#160;&#160;查看全文</string>
+    <string name="txt_more_discuss">更多评论(%s)</string>
 </resources>

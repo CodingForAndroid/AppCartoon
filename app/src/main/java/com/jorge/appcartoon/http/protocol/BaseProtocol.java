@@ -1,6 +1,8 @@
 package com.jorge.appcartoon.http.protocol;
 
 
+import android.os.SystemClock;
+
 import com.jorge.appcartoon.util.FileUtils;
 import com.jorge.appcartoon.util.IOUtils;
 import com.jorge.appcartoon.util.LogUtils;
@@ -23,7 +25,7 @@ public abstract class BaseProtocol<Data> {
 
     /** 加载协议 */ // 首先  Boolean localFetchFirst ： 取本地缓存  默认为true
     public Data load(int index,boolean localFetchFirst) {
-//        SystemClock.sleep(1000);// 休息1秒，防止加载过快，看不到界面变化效果
+        SystemClock.sleep(1000);// 休息1秒，防止加载过快，看不到界面变化效果
         String json = null;
         // 1.从本地缓存读取数据，查看缓存时间
         if(localFetchFirst){
@@ -40,6 +42,7 @@ public abstract class BaseProtocol<Data> {
                 saveToLocal(json, index);
             }
         }
+        SystemClock.sleep(3000);// 休息1秒，防止加载过快，看不到界面变化效果
         return parseFromJson(json);
     }
 

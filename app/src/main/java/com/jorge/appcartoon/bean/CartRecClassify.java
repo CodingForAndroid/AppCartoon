@@ -3,7 +3,7 @@ package com.jorge.appcartoon.bean;
 import java.util.List;
 
 /**
- * 卡通推荐分类
+ * 卡通推荐分类  "http://v2.api.dmzj.com/recommend.json"
  * @author：Jorge on 2015/11/10 18:38
  */
 public class CartRecClassify {
@@ -16,4 +16,13 @@ public class CartRecClassify {
     //作品列表
     public List<CartWork> data;
 
+    @Override
+    public String toString() {
+        return "CartRecClassify{" +
+                "category_id=" + category_id +
+                ", title='" + title + '\'' +
+                ", sort=" + sort +
+                ", data=" + data +
+                '}';
+    }
 }

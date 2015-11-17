@@ -4,18 +4,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
-import com.jorge.appcartoon.ThreadManager;
-import com.jorge.appcartoon.bean.CartIns;
+import com.jorge.appcartoon.bean.CartInstruction;
 import com.jorge.appcartoon.http.ApiUtil;
 import com.jorge.appcartoon.http.HttpUtil;
 import com.jorge.appcartoon.util.LogUtils;
-import com.jorge.appcartoon.util.UIUtils;
 
 /**
  * 动漫介绍页，请求数据
  * @author：Jorge on 2015/11/16 12:21
  */
-public class CartInsProtocol extends BaseProtocol<CartIns>{
+public class CartInsProtocol extends BaseProtocol<CartInstruction>{
     boolean waitflag=true;
     String  result ="";
     private String  url="";
@@ -54,10 +52,10 @@ public class CartInsProtocol extends BaseProtocol<CartIns>{
     }
 
     @Override
-    protected CartIns parseFromJson(String json) {
+    protected CartInstruction parseFromJson(String json) {
         LogUtils.e(json.toString());
         Gson gson = new Gson();
-        CartIns cartIns=  gson.fromJson(json, CartIns.class);
+        CartInstruction cartIns=  gson.fromJson(json, CartInstruction.class);
         LogUtils.e(cartIns.toString());
         if(mListener!=null) mListener.hasFinishLoading();
         return cartIns;

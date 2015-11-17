@@ -6,17 +6,24 @@
     <dimen name="comm_navigation_hei">50dp</dimen>
     <dimen name="minus_activity_horizontal_margin">-16dp</dimen>
     <dimen name="minus_activity_vertical_margin">-16dp</dimen>
+
+    <dimen name="list_item_loadmore_height">40dp</dimen>
+    <dimen name="list_item_margin">9dp</dimen>
+    <dimen name="chanel_item_margin">5dp</dimen>
+    <dimen name="cart_ins_height">200dp</dimen>
+    <dimen name="button_height">35dp</dimen>
+    <dimen name="button_margin">20dp</dimen>
+
+
+    <integer  name="grid_nums">2</integer >
+    <integer  name="txt_desc_max_length">40</integer >
+    <integer  name="borderWidth">30</integer >
+
+
     <dimen name="txt_size_classify_high">18sp</dimen>
     <dimen name="txt_size_classify_mid">15sp</dimen>
     <dimen name="txt_size_classify_low">12sp</dimen>
     <dimen name="txt_size_classify_little">10sp</dimen>
     <dimen name="txt_size_classify_less">8sp</dimen>
     <dimen name="txt_size_classify_least">7sp</dimen>
-    <dimen name="list_item_loadmore_height">40dp</dimen>
-    <dimen name="list_item_margin">9dp</dimen>
-
-
-    <integer  name="grid_nums">2</integer >
-    <integer  name="txt_desc_max_length">30</integer >
-    <dimen name="fab_margin">16dp</dimen>
 </resources>

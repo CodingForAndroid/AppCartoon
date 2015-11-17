@@ -12,13 +12,16 @@ public class CartWork {
         public String title;
         //子标题
         public String sub_title;
+        //作者姓名
+        public String authors;
         //类型
         public int type;
         // url
         public String url;
-        //
-        public int  obj_id;
         //状态  连载中
         public String status;
-
+        //comic_id
+        public int id;
+        //comic_id  与 id 2 选 1
+        public int  obj_id;
 }

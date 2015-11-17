@@ -5,12 +5,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-
+import android.view.LayoutInflater;
+import android.view.View;
 import com.jorge.appcartoon.R;
 import com.jorge.appcartoon.util.UIUtils;
+import com.jorge.appcartoon.widget.LoadingPage;
 import com.jorge.appcartoon.widget.PagerTab;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * 卡通
@@ -22,17 +25,17 @@ public class CartoonFragment extends BaseFragment {
     @Bind(R.id.pager)
     ViewPager mPager;
 
-    private   MainPagerAdapter  mAdapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_cartoon);
+
     }
 
     @Override
-    public void initViews() {
-        //初始化pager
-        mAdapter = new MainPagerAdapter(getFragmentManager());
+    protected void initViewsAndEvents() {
+//        初始化pager
+        MainPagerAdapter  mAdapter = new MainPagerAdapter(getFragmentManager());
         mPager.setAdapter(mAdapter);
         //tab的初始化、tab和ViewPager的互相绑定
         mPageTabs.setViewPager(mPager);
@@ -40,8 +43,15 @@ public class CartoonFragment extends BaseFragment {
     }
 
     @Override
-    public void addListener() {
+    protected LoadingPage.LoadResult load() {
+        return LoadingPage.LoadResult.SUCCEED;
+    }
 
+    @Override
+    protected View createLoadedView() {
+        View view=  LayoutInflater.from(getContext()).inflate(R.layout.fragment_cartoon,null);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
 

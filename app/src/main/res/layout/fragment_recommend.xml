@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="fill_parent">
 
-    <TextView
-        android:text="@string/txt_recommend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+    <com.jorge.appcartoon.widget.ImageCycleView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:id="@+id/cycleView"/>
+
+
+   <com.jorge.appcartoon.widget.BaseListView
+       android:layout_marginTop="@dimen/chanel_item_margin"
+       android:background="@color/white"
+       android:id="@+id/baseListView"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"/>
+    </LinearLayout>
+</ScrollView>

@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 import android.widget.Button;
 import com.jorge.appcartoon.R;
+import com.jorge.appcartoon.util.UIUtils;
+import com.jorge.appcartoon.widget.LoadingPage;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -34,38 +37,9 @@ public class TabFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_tab);
+//        setContentView(R.layout.fragment_tab);
     }
 
-    @Override
-    public void initViews() {
-         //初始化Tab 圖標
-        initTabIcon();
-        //給Tabhost 綁定內容
-        mTabHost.setup(getActivity(), getChildFragmentManager(),
-                R.id.tabcontent);
-        mTabHost.getTabWidget().setVisibility(View.GONE);
-
-        mTabHost.addTab(
-                mTabHost.newTabSpec(HOMEPAGE_TAB1)
-                        .setIndicator(HOMEPAGE_TAB1), CartoonFragment.class,
-                null);
-        mTabHost.addTab(
-                mTabHost.newTabSpec(HOMEPAGE_TAB2)
-                        .setIndicator(HOMEPAGE_TAB2), NewsFragment.class,
-                null);
-        mTabHost.addTab(
-                mTabHost.newTabSpec(HOMEPAGE_TAB3)
-                        .setIndicator(HOMEPAGE_TAB3), NovelFragment.class,
-                null);
-        mTabHost.addTab(
-                mTabHost.newTabSpec(HOMEPAGE_TAB4)
-                        .setIndicator(HOMEPAGE_TAB4), MineFragment.class, null);
-
-        mTabHost.setCurrentTab(currentTab);
-        //切換Tab
-        onTabChanged(currentTab);
-    }
 
     /**
      * 初始化Tab 圖標
@@ -92,13 +66,6 @@ public class TabFragment extends BaseFragment implements View.OnClickListener {
         mineNormal.setBounds(0, 0, right, bottom);
     }
 
-    @Override
-    public void addListener() {
-        cartoonTab.setOnClickListener(this);
-        newsTab.setOnClickListener(this);
-        novelTab.setOnClickListener(this);
-        mineTab.setOnClickListener(this);
-    }
 
     /**
      * 當切換Tab的時候執行此方法
@@ -152,6 +119,53 @@ public class TabFragment extends BaseFragment implements View.OnClickListener {
                 break;
         }
         mTabHost.setCurrentTab(tabIndex);
+    }
+
+    @Override
+    protected void initViewsAndEvents() {
+        //初始化Tab 圖標
+        initTabIcon();
+        //給Tabhost 綁定內容
+        mTabHost.setup(getActivity(), getChildFragmentManager(),
+                R.id.tabcontent);
+        mTabHost.getTabWidget().setVisibility(View.GONE);
+
+        mTabHost.addTab(
+                mTabHost.newTabSpec(HOMEPAGE_TAB1)
+                        .setIndicator(HOMEPAGE_TAB1), CartoonFragment.class,
+                null);
+        mTabHost.addTab(
+                mTabHost.newTabSpec(HOMEPAGE_TAB2)
+                        .setIndicator(HOMEPAGE_TAB2), NewsFragment.class,
+                null);
+        mTabHost.addTab(
+                mTabHost.newTabSpec(HOMEPAGE_TAB3)
+                        .setIndicator(HOMEPAGE_TAB3), NovelFragment.class,
+                null);
+        mTabHost.addTab(
+                mTabHost.newTabSpec(HOMEPAGE_TAB4)
+                        .setIndicator(HOMEPAGE_TAB4), MineFragment.class, null);
+
+        mTabHost.setCurrentTab(currentTab);
+        //切換Tab
+        onTabChanged(currentTab);
+
+        cartoonTab.setOnClickListener(this);
+        newsTab.setOnClickListener(this);
+        novelTab.setOnClickListener(this);
+        mineTab.setOnClickListener(this);
+    }
+
+    @Override
+    protected LoadingPage.LoadResult load() {
+        return LoadingPage.LoadResult.SUCCEED;
+    }
+
+    @Override
+    protected View createLoadedView() {
+        View view=     UIUtils.inflate(R.layout.fragment_tab);
+        ButterKnife.bind(this,view);
+        return view;
     }
 
     @Override

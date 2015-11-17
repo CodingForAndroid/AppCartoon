@@ -97,11 +97,11 @@ public abstract class LoadingPage extends FrameLayout {
         }
     }
     protected View createLoadingView() {
-        String[] names= UIUtils.getStringArray(R.array.marks);
-        int  num= (int) (Math.random()*names.length);
-        View view=  UIUtils.inflate(R.layout.loading_page_loading);
-        TextView tv= (TextView) view.findViewById(R.id.tv_mark);
-        tv.setText(names[num]);
+//        String[] names= UIUtils.getStringArray(R.array.marks);
+//        int  num= (int) (Math.random()*names.length);
+        View view=  UIUtils.inflate(R.layout.loading_page_bubble_loading);
+//        TextView tv= (TextView) view.findViewById(R.id.tv_mark);
+//        tv.setText(names[num]);
         return view;
     }
     protected View createEmptyView() {
