@@ -22,6 +22,7 @@ public  abstract class BaseActivity extends AppCompatActivity {
         init();
         initView();
         overrideSlideEnterTransition();
+        addListener();
     }
 
     @Override
@@ -39,6 +40,8 @@ public  abstract class BaseActivity extends AppCompatActivity {
     public abstract void init();
 
     public abstract void initView();
+
+    public abstract void addListener();
 
     /** 关闭所有Activity */
     public static void finishAll() {

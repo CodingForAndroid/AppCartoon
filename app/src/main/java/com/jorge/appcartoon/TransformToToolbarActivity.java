@@ -23,6 +23,11 @@ public class TransformToToolbarActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void addListener() {
+
+    }
+
 
 //    @Bind(R.id.fab)
 //    FloatingActionButton fab;

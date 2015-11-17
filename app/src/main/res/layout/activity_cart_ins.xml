@@ -1,24 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
-    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:title=" "
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@mipmap/icon_ins_left_arrow_2x"
         android:minHeight="?attr/actionBarSize">
         <TextView
+            android:id="@+id/tv_title"
+            style="@style/txt_style_size_high"
             android:textColor="@color/blue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="AppCartoon"
-            android:textSize="20sp"
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
     <android.support.v4.widget.SwipeRefreshLayout
@@ -34,92 +28,98 @@
          android:layout_width="match_parent"
          android:layout_height="match_parent"
          android:orientation="vertical">
-
          <com.jorge.appcartoon.widget.RevealLayout
              android:id="@+id/layout1"
              android:orientation="vertical"
              android:layout_width="fill_parent"
              android:layout_height="wrap_content" >
 
-             <RelativeLayout
+            <include layout="@layout/layout_cart_ins_top"/>
+             <include layout="@layout/layout_cart_ins_brief_ins"/>
+             <include android:id="@+id/divider" layout="@layout/layout_divider_gray"/>
 
-                 android:background="@drawable/shape_ins_bg_purple_blue"
+             <LinearLayout
+                 android:layout_margin="@dimen/activity_horizontal_padding"
                  android:layout_width="fill_parent"
-                 android:layout_height="@dimen/cart_ins_height">
+                 android:layout_height="wrap_content">
+                 <TextView
+                     style="@style/base_weight_horizontal_style"
+                     android:text="@string/txt_book_mark"
+                     android:drawableLeft="@mipmap/icon_ins_book_mark" />
+                 <TextView
+                     style="@style/base_weight_horizontal_style"
+                     android:text="@string/txt_book_list"
+                     android:drawableLeft="@mipmap/icon_ins_book_mark" />
+                 <TextView
+                     style="@style/base_weight_horizontal_style"
+                     android:text="@string/txt_relative_subject"
+                     android:drawableLeft="@mipmap/icon_ins_book_mark" />
+                 <TextView
+                     style="@style/base_weight_horizontal_style"
+                     android:text="@string/txt_share"
+                     android:drawableLeft="@mipmap/icon_ins_book_mark" />
+             </LinearLayout>
 
-                 <ImageView
-                     android:layout_marginLeft="@dimen/activity_vertical_margin"
-                     android:layout_centerVertical="true"
-                     android:src="@mipmap/ic_launcher"
-                     android:id="@+id/iv_cover"
-                     android:layout_width="100dp"
-                     android:layout_height="130dp" />
-
-
-                <ImageView
-                    android:contentDescription="@string/copy_right"
-                    android:id="@+id/iv_copyright"
-                    android:src="@mipmap/icon_ins_logo_2x"
-                    android:layout_marginTop="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                 <LinearLayout
-                     android:layout_centerVertical="true"
-                     android:orientation="vertical"
-                     android:layout_toRightOf="@+id/iv_cover"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content">
-                     <TextView
-                        style="@style/cart_ins_txt_style"
-                         android:id="@+id/tv_author"
-                         android:text="  作者"
-                         android:drawableLeft="@mipmap/icon1_ins_author_2x"/>
-                     <TextView
-                         style="@style/cart_ins_txt_style"
-                         android:id="@+id/tv_type"
-                         android:text=" 冒险、格斗" />
-                     <TextView
-                         style="@style/cart_ins_txt_style"
-                         android:id="@+id/tv_hot"
-                         android:text=" 点击 99999" />
-                     <TextView
-                         style="@style/cart_ins_txt_style"
-                         android:id="@+id/tv_subscribe"
-                         android:text=" 订阅 99999" />
-                     <TextView
-                         style="@style/cart_ins_txt_style"
-                         android:id="@+id/tv_update_time"
-                         android:text=" 2015-10-10 10:10"
-                         android:drawableLeft="@mipmap/icon3_ins_time_2x"/>
-                     <LinearLayout
-                         android:layout_margin="5dp"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content">
-                         <Button
-                             android:textColor="@color/white"
-                             android:singleLine="true"
-                             android:background="@drawable/shape_rectangle_blue"
-                             android:text="@string/txt_subscribe"
-                             android:layout_width="wrap_content"
-                             android:layout_height="@dimen/button_height"  />
-                         <Button
-                             android:layout_marginLeft="@dimen/button_margin"
-                             android:textColor="@color/white"
-                             android:singleLine="true"
-                             android:background="@drawable/shape_ins_rectangle_stroke_white"
-                             android:text="@string/txt_continue_watch"
-                             android:layout_width="wrap_content"
-                             android:layout_height="@dimen/button_height" />
-                     </LinearLayout>
-                 </LinearLayout>
+             <RelativeLayout
+                 android:layout_margin="@dimen/activity_horizontal_padding"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content">
+                 <TextView
+                     android:layout_alignParentLeft="true"
+                     android:text="@string/txt_cart_chapter"
+                     style="@style/txt_style_size_high" />
+                 <TextView
+                     style="@style/txt_style_size_high"
+                     android:textColor="@color/gray"
+                     android:drawableRight="@mipmap/icon_ins_reverse_normal"
+                     android:id="@+id/tv_reverse_order"
+                     android:layout_alignParentRight="true"
+                     android:text="@string/txt_reverse_order"/>
+                 <TextView
+                     style="@style/txt_style_size_high"
+                     android:layout_marginRight="@dimen/activity_horizontal_padding"
+                     android:textColor="@color/blue"
+                     android:drawableRight="@mipmap/icon_ins_positive_selected"
+                     android:layout_toLeftOf="@+id/tv_reverse_order"
+                     android:id="@+id/tv_positive_order"
+                     android:text="@string/txt_positive_order" />
              </RelativeLayout>
-         </com.jorge.appcartoon.widget.RevealLayout>
 
+             <RelativeLayout
+                 android:layout_margin="@dimen/activity_horizontal_padding"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content">
+                 <TextView
+                     android:id="@+id/tv_discuss"
+                     style="@style/txt_style_size_high"
+                     android:layout_alignParentLeft="true"
+                     android:text="@string/txt_discuss" />
+                 <TextView
+                     style="@style/txt_style_size_high"
+                     android:textColor="@color/blue"
+                     android:layout_alignParentRight="true"
+                     android:text="@string/txt_new_discuss" />
+             </RelativeLayout>
+             <include layout="@layout/item_comment_list"/>
+             <include layout="@layout/layout_divider_gray"/>
+             <TextView
+                 android:id="@+id/tv_more_discuss"
+                 android:clickable="true"
+                 style="@style/txt_style_size_high"
+                 android:gravity="center"
+                 android:text="@string/txt_more_discuss"
+                 android:layout_width="fill_parent"
+                 android:layout_height="@dimen/comm_navigation_hei" />
+         </com.jorge.appcartoon.widget.RevealLayout>
      </LinearLayout>
  </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <View
+        android:id="@+id/loading_view"
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
     <ProgressBar
         android:id="@+id/progressbar"
         style="@android:style/Widget.ProgressBar"

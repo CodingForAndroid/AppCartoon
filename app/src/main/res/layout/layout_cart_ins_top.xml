@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/cart_ins_height"
+    android:background="@drawable/shape_ins_bg_purple_blue">
+
+    <ImageView
+        android:id="@+id/iv_cover"
+        android:layout_width="120dp"
+        android:layout_height="160dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/activity_horizontal_padding"/>
+
+    <ImageView
+        android:layout_marginTop="@dimen/button_margin"
+        android:id="@+id/iv_copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/copy_right"
+        android:src="@mipmap/icon_ins_logo_2x" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iv_cover"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_author"
+            style="@style/cart_ins_txt_style"
+            android:drawableLeft="@mipmap/icon1_ins_author_2x"
+            android:text="  作者" />
+
+        <TextView
+            android:id="@+id/tv_type"
+            style="@style/cart_ins_txt_style"
+            android:text=" 冒险、格斗" />
+
+        <TextView
+            android:id="@+id/tv_hot"
+            style="@style/cart_ins_txt_style"
+            android:text=" 点击 99999" />
+
+        <TextView
+            android:id="@+id/tv_subscribe"
+            style="@style/cart_ins_txt_style"
+            android:text=" 订阅 99999" />
+
+        <TextView
+            android:id="@+id/tv_update_time"
+            style="@style/cart_ins_txt_style"
+            android:drawableLeft="@mipmap/icon3_ins_time_2x"
+            android:text=" 2015-10-10 10:10" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                android:background="@drawable/shape_rectangle_blue"
+                android:singleLine="true"
+                android:text="@string/txt_subscribe"
+                android:textColor="@color/white" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginLeft="@dimen/button_margin"
+                android:background="@drawable/shape_ins_rectangle_stroke_white"
+                android:singleLine="true"
+                android:text="@string/txt_continue_watch"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
