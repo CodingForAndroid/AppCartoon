@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:contentDescription="@string/copy_right"
+        android:clickable="true"
         android:src="@mipmap/icon_ins_logo_2x" />
 
     <LinearLayout

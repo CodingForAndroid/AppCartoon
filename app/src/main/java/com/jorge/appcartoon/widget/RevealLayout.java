@@ -299,7 +299,7 @@ System.out.println("view:"+views.size());
 	public void viewOnScreen(MotionEvent event, View view,int x,int y){
 		View upView = getTargetView(view, x, (int)y);
 
-		if(targetView.equals(upView)&&(null!=upView)&&(targetView.getId()==upView.getId())){
+		if((null!=upView)&&targetView.equals(upView)&&(targetView.getId()==upView.getId())){
 			onOneView=true;
 		}else{
 			onOneView=false;

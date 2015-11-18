@@ -18,12 +18,20 @@ import java.io.FileWriter;
  */
 public abstract class BaseProtocol<Data> {
 
-    /** 加载协议 */
+    /**
+     *  加载协议
+     * @param index :0
+     * @return
+     */
     public Data load(int index) {
-        return load(index,true);
+        return load(index, true);
     }
-
-    /** 加载协议 */ // 首先  Boolean localFetchFirst ： 取本地缓存  默认为true
+    /**
+     * 加载协议 首先  Boolean localFetchFirst ： 取本地缓存  默认为true
+     * @param index:0
+     * @param localFetchFirst ： 取本地缓存  默认为true
+     * @return
+     */
     public Data load(int index,boolean localFetchFirst) {
         SystemClock.sleep(1000);// 休息1秒，防止加载过快，看不到界面变化效果
         String json = null;

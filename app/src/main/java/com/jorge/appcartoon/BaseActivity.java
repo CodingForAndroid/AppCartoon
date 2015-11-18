@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
+import android.view.GestureDetector;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -15,10 +16,11 @@ public  abstract class BaseActivity extends AppCompatActivity {
     private static BaseActivity mForegroundActivity = null;
     /** 记录所有活动的Activity */
     private static final List<BaseActivity> mActivities = new LinkedList<BaseActivity>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //
+//        setSwipeBackEnable(false);
         init();
         initView();
         overrideSlideEnterTransition();

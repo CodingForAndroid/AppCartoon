@@ -15,4 +15,13 @@ public class Chapter {
         //97650
         public int filesize;
 
+    @Override
+    public String toString() {
+        return "Chapter{" +
+                "chapter_id=" + chapter_id +
+                ", chapter_title='" + chapter_title + '\'' +
+                ", updatetime=" + updatetime +
+                ", filesize=" + filesize +
+                '}';
     }
+}

@@ -1,8 +1,9 @@
 package com.jorge.appcartoon.ui.activity;
 
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,14 +17,17 @@ import android.widget.TextView;
 import com.jorge.appcartoon.BaseActivity;
 import com.jorge.appcartoon.R;
 import com.jorge.appcartoon.ThreadManager;
+import com.jorge.appcartoon.adapter.ChapterRecycleAdapter;
 import com.jorge.appcartoon.bean.CartComment;
 import com.jorge.appcartoon.bean.CartInstruction;
 import com.jorge.appcartoon.http.ApiUtil;
 import com.jorge.appcartoon.http.protocol.CartInsProtocol;
 import com.jorge.appcartoon.util.DateFormatUtil;
 import com.jorge.appcartoon.util.ImageLoaderHelper;
+import com.jorge.appcartoon.util.LogUtils;
 import com.jorge.appcartoon.util.UIUtils;
 import com.jorge.appcartoon.util.ViewUtils;
+import com.jorge.appcartoon.widget.MeasureGridLayoutManager;
 import com.jorge.appcartoon.widget.RevealLayout;
 
 import butterknife.Bind;
@@ -36,7 +40,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * @author：Jorge on 2015/11/16 10:13
  */
 public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
-
 
     @Bind(R.id.layout1)
     RevealLayout layout1;
@@ -92,24 +95,69 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
     TextView tvDiscuss;
     @Bind(R.id.tv_more_discuss)
     TextView tvMoreDiscuss;
+    @Bind(R.id.recycle)
+    RecyclerView recycle;
 
-    //获取到的作品信息
-    private CartInstruction cartInsruction;
-    //描述是否详情
+    /**获取到的作品信息*/
+    private CartInstruction cartInstruction = new CartInstruction();
+    /**描述是否详情*/
     public static boolean hasOpen = false;
+    /**是否显示全部章节*/
+    private boolean showAllChapter = false;
+    /**数据请求协议*/
+    private CartInsProtocol cartInsProtocol;
+    /**计算刷新次数*/
+    private int i = 1;
 
     @Override
     public void onRefresh() {
+        ViewUtils.showView(loadingView);
+        ViewUtils.showView(progressbar);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                cartInstruction = cartInsProtocol.load(++i, false);
+            }
+        };
+        ThreadManager.getLongPool().execute(runnable);
+
+        cartInsProtocol.setOnCompleteListener(new CartInsProtocol.CompleteListener() {
+            @Override
+            public void hasFinishLoading() {
+                UIUtils.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipe.setRefreshing(false);
+                        setData();
+                        ViewUtils.hideView(loadingView);
+                        ViewUtils.hideView(progressbar);
+                    }
+                });
+            }
+
+            @Override
+            public void onLoading() {
+                swipe.setRefreshing(false);
+                UIUtils.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ViewUtils.showView(loadingView);
+                        ViewUtils.showView(progressbar);
+                    }
+                });
+            }
+        });
+
     }
 
     @Override
     public void init() {
         int current_id = getIntent().getIntExtra(ApiUtil.COMIC_ID, 17149);
-        final CartInsProtocol cartInsProtocol = new CartInsProtocol(current_id);
+        cartInsProtocol = new CartInsProtocol(current_id);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                cartInsruction = cartInsProtocol.load(0, false);
+                cartInstruction = cartInsProtocol.load(0, false);
             }
         };
         ThreadManager.getLongPool().execute(runnable);
@@ -143,62 +191,93 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
     }
 
     public void setData() {
-        //作者
-        tvAuthor.setText("  " + cartInsruction.authors.get(0).tag_name);
-        //设置标题
-        tvTitle.setText(cartInsruction.title);
-        //热度
-        tvHot.setText("  " + cartInsruction.hot_num + "");
-        //订阅
-        tvSubscribe.setText("  " + cartInsruction.subscribe_num + "");
-        //cover 图片
-        ImageLoaderHelper.getInstance().loadImage(cartInsruction.cover.split("\\?")[0], ivCover);
-        //tvUpdateTime 时间
-        tvUpdateTime.setText("  " + DateFormatUtil.formatTime(DateFormatUtil.format(cartInsruction.last_updatetime)));
-        //tvType  分类
+        /**作者*/
+        tvAuthor.setText("  " + cartInstruction.authors.get(0).tag_name);
+        /**设置标题*/
+        tvTitle.setText(cartInstruction.title);
+        /**热度*/
+        tvHot.setText("  " + cartInstruction.hot_num + "");
+        /**订阅*/
+        tvSubscribe.setText("  " + cartInstruction.subscribe_num + "");
+        /**cover 图片*/
+        ImageLoaderHelper.getInstance().loadImage(cartInstruction.cover.split("\\?")[0], ivCover);
+        /**cover tvUpdateTime 时间*/
+        tvUpdateTime.setText("  " + DateFormatUtil.formatTime(DateFormatUtil.format(cartInstruction.last_updatetime)));
+        /**tvType  分类*/
         String classify = "";
-        for (int i = 0; i < cartInsruction.types.size(); i++) {
-            classify += cartInsruction.types.get(i).tag_name + " ";
+        for (int i = 0; i < cartInstruction.types.size(); i++) {
+            classify += cartInstruction.types.get(i).tag_name + " ";
         }
         tvType.setText("  " + classify.substring(0, classify.length() - 1));
-
-        //设置描述
-        tvBriefDes.setText(cartInsruction.description.length() >= UIUtils.getInteger(R.integer.txt_desc_max_length) ? cartInsruction.description.substring(0, UIUtils.getInteger(R.integer.txt_desc_max_length)) + "..." : cartInsruction.description);
-
-        //设置评论数
-        tvDiscuss.setText( String.format( UIUtils.getString(R.string.txt_discuss), cartInsruction.comment.comment_count));
-        //更多评论
-        tvMoreDiscuss.setText( String.format( UIUtils.getString(R.string.txt_more_discuss), cartInsruction.comment.comment_count));
-        //初始化评论
-        CartComment comment=cartInsruction.comment;
-       if(comment.comment_count<=0) return;
-        //头像
-        CartComment.CommentInfo commentInfo=comment.latest_comment.get(0);
+        /**设置描述*/
+        tvBriefDes.setText(cartInstruction.description.length() >= UIUtils.getInteger(R.integer.txt_desc_max_length) ? cartInstruction.description.substring(0, UIUtils.getInteger(R.integer.txt_desc_max_length)) + "..." : cartInstruction.description);
+        /**设置评论数*/
+        tvDiscuss.setText(String.format(UIUtils.getString(R.string.txt_discuss), cartInstruction.comment.comment_count));
+        /**更多评论*/
+        tvMoreDiscuss.setText(String.format(UIUtils.getString(R.string.txt_more_discuss), cartInstruction.comment.comment_count));
+        /**初始化评论*/
+        CartComment comment = cartInstruction.comment;
+        if (comment.comment_count <= 0) return;
+        /**头像*/
+        CartComment.CommentInfo commentInfo = comment.latest_comment.get(0);
         ImageLoaderHelper.getInstance().loadImage(commentInfo.avatar.split("\\?")[0], profileImage);
-        //昵称
+        /**昵称*/
         tvNick.setText(commentInfo.nickname);
-        //内容
+        /**内容*/
         tvContent.setText(commentInfo.content.length() >= UIUtils.getInteger(R.integer.txt_desc_max_length) ? commentInfo.content.substring(0, UIUtils.getInteger(R.integer.txt_desc_max_length)) + "..." : commentInfo.content);
-        //评论时间
+        /**评论时间*/
         tvTime.setText(DateFormatUtil.formatTime(DateFormatUtil.format(commentInfo.createtime)));
 //        tv_whole 查看全文
 
+        /**初始化RecycleView*/
+        recycle.setLayoutManager(new MeasureGridLayoutManager(this, 4));
+        mChapterAdapter = new ChapterRecycleAdapter(cartInstruction.chapters.get(0), showAllChapter);
+        recycle.setAdapter(mChapterAdapter);
+        /**章节 点击*/
+        mChapterAdapter.setOnItemClickListener(new ChapterRecycleAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                LogUtils.e("position:" + position + "   cartInstruction.chapters.get(0).data.size():" + cartInstruction.chapters.get(0).data.size());
+                if (position == cartInstruction.chapters.get(0).data.size() && showAllChapter) {
+                    showAllChapter = false;
+                    mChapterAdapter.setShowType(showAllChapter);
+                    mChapterAdapter.notifyDataSetChanged();
+                    return;
+                }
+                if (position == 11 && !showAllChapter) {
+                    showAllChapter = true;
+                    mChapterAdapter.setShowType(showAllChapter);
+                    mChapterAdapter.notifyDataSetChanged();
+                } else {
+                    LogUtils.e(cartInstruction.chapters.get(0).data.get(position).toString());
+                }
+
+
+            }
+        });
     }
+
+    //章节 adapter
+    private ChapterRecycleAdapter mChapterAdapter;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_cart_ins);
         ButterKnife.bind(this);
         toolbar.setTitle("");
-        // 设置后 在改变不生效
+        /** 设置后在改变不生效*/
         setSupportActionBar(toolbar);
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        /** 顶部刷新的样式*/
+        swipe.setColorSchemeResources(android.R.color.holo_red_light,
+                android.R.color.holo_green_light,
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_orange_light);
 
 //         Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
 //            @Override
@@ -225,57 +304,20 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
             @Override
             public void onClick(View v) {
                 if (hasOpen) {
-                    tvBriefDes.setText(cartInsruction.description.length() >= UIUtils.getInteger(R.integer.txt_desc_max_length) ? cartInsruction.description.substring(0, UIUtils.getInteger(R.integer.txt_desc_max_length)) + "..." : cartInsruction.description);
+                    tvBriefDes.setText(cartInstruction.description.length() >= UIUtils.getInteger(R.integer.txt_desc_max_length) ? cartInstruction.description.substring(0, UIUtils.getInteger(R.integer.txt_desc_max_length)) + "..." : cartInstruction.description);
                     tvDesToggle.setBackgroundResource(R.mipmap.icon_open_btn);
                     hasOpen = false;
                 } else {
-                    tvBriefDes.setText(cartInsruction.description);
+                    tvBriefDes.setText(cartInstruction.description);
                     tvDesToggle.setBackgroundResource(R.mipmap.icon_close_btn);
                     hasOpen = true;
                 }
             }
         });
+        swipe.setOnRefreshListener(this);
+
+
     }
-//    @Override
-//    public int getLayoutResId() {
-//        return R.layout.activity_cart_ins;
-//    }
-
-//    @Override
-//    protected void initView() {
-//        mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
-//
-//        swipe = (SwipeRefreshLayout) findViewById(R.id.swipe);
-//        swipe.setOnRefreshListener(this);
-//        // 顶部刷新的样式
-//        swipe.setColorSchemeResources(android.R.color.holo_red_light,
-//                android.R.color.holo_green_light,
-//                android.R.color.holo_blue_bright,
-//                android.R.color.holo_orange_light);
-//    }
-//
-//    @Override
-//    public void onRefresh() {
-//        mProgressBar.setVisibility(View.VISIBLE);
-//        Timer timer = new Timer();
-//        TimerTask task = new TimerTask() {
-//
-//            @Override
-//            public void run() {
-//                runOnUiThread(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        swipe.setRefreshing(false);
-//                        mProgressBar.setVisibility(View.INVISIBLE);
-//                    }
-//                });
-//
-//            }
-//        };
-//        timer.schedule(task, 3000);
-//    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -289,11 +331,6 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
         return true;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }
 
