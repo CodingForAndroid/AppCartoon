@@ -1,16 +1,15 @@
 package com.jorge.appcartoon;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-import android.support.v7.app.AppCompatActivity;
-import android.view.GestureDetector;
+import com.jorge.appcartoon.widget.swipe.SwipeBackActivity;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public  abstract class BaseActivity extends AppCompatActivity {
+
+public  abstract class BaseActivity extends SwipeBackActivity {
 
     /** 记录处于前台的Activity */
     private static BaseActivity mForegroundActivity = null;
@@ -20,7 +19,7 @@ public  abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //
-//        setSwipeBackEnable(false);
+
         init();
         initView();
         overrideSlideEnterTransition();

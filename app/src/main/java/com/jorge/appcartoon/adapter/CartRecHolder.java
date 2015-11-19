@@ -13,7 +13,6 @@ import com.jorge.appcartoon.bean.CartRecClassify;
 import com.jorge.appcartoon.bean.CartWork;
 import com.jorge.appcartoon.http.ApiUtil;
 import com.jorge.appcartoon.ui.activity.CartInsActivity;
-import com.jorge.appcartoon.ui.activity.SwipeFinishActivity;
 import com.jorge.appcartoon.util.ImageLoaderHelper;
 import com.jorge.appcartoon.util.UIUtils;
 import java.util.List;
@@ -243,6 +242,7 @@ public void setTextDrawable(TextView textView,int resId){
         if(comic_id!=0){
             Intent intent= new Intent(UIUtils.getContext(),CartInsActivity.class);
 //            Intent intent= new Intent(UIUtils.getContext(),SwipeFinishActivity.class);
+//            Intent intent= new Intent(UIUtils.getContext(),MySipeFinishActivity .class);
             intent.putExtra(ApiUtil.COMIC_ID,comic_id);
             UIUtils.showToastSafe(""+comic_id);
             UIUtils.startActivity(intent);

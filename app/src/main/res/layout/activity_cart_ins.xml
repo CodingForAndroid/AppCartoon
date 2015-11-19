@@ -28,7 +28,7 @@
          android:layout_width="match_parent"
          android:layout_height="match_parent"
          android:orientation="vertical">
-         <com.jorge.appcartoon.widget.RevealLayout
+         <com.jorge.appcartoon.widget.RippleLayout
              android:id="@+id/layout1"
              android:orientation="vertical"
              android:layout_width="fill_parent"
@@ -116,7 +116,7 @@
                  android:text="@string/txt_more_discuss"
                  android:layout_width="fill_parent"
                  android:layout_height="@dimen/comm_navigation_hei" />
-         </com.jorge.appcartoon.widget.RevealLayout>
+         </com.jorge.appcartoon.widget.RippleLayout>
      </LinearLayout>
  </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>

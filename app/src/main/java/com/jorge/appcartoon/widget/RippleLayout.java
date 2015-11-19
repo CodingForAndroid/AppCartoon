@@ -63,14 +63,14 @@ import com.jorge.appcartoon.R;
 /**
  * 水波纹效果的父布局，包裹子布局，子布局需要 clickable :true
  */
-public class RevealLayout extends LinearLayout {
+public class RippleLayout extends LinearLayout {
 	private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	// 圆心 坐标 x,y
 	private float mCenterX, mCenterY;
 	// 半径
 	private int mRevealRadius = 0;
 	private int[] mLocation = new int[2];
-	private int INVALIDATE_DURATION = 4;
+	private int INVALIDATE_DURATION = 40;
 	// 目标的 宽度 和 高度
 	private int mTargetHeight, mTargetWidth;
 	// 圆的最大半径
@@ -87,18 +87,18 @@ public class RevealLayout extends LinearLayout {
 	private View mTargetView;
 	//手指按下与抬起 是在同一个View 上面。
 	private boolean onOneView=true;
-	public RevealLayout(Context context) {
+	public RippleLayout(Context context) {
 		super(context);
 		init();
 	}
 
-	public RevealLayout(Context context, AttributeSet attrs) {
+	public RippleLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
 	}
 	// Android 3.0
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	public RevealLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+	public RippleLayout(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		init();
 	}
@@ -185,7 +185,8 @@ public class RevealLayout extends LinearLayout {
 			//判断手按下和抬起是在同一个View身上
 			viewOnScreen(event, this,x,y);
 			mIsPressed = false;
-			postInvalidateDelayed(INVALIDATE_DURATION);
+			postInvalidate();
+//			postInvalidateDelayed(INVALIDATE_DURATION);
 			break;
 		case MotionEvent.ACTION_CANCEL:
 			mIsPressed = false;

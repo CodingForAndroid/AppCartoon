@@ -10,8 +10,8 @@ import com.jorge.appcartoon.http.HttpUtil;
 import com.jorge.appcartoon.util.LogUtils;
 
 /**
- * ∂Ø¬˛ΩÈ…‹“≥£¨«Î«Û ˝æ›
- * @author£∫Jorge on 2015/11/16 12:21
+ * Âä®Êº´‰ªãÁªçÈ°µÔºåËØ∑Ê±ÇÊï∞ÊçÆ
+ * @authorÔºöJorge on 2015/11/16 12:21
  */
 public class CartInsProtocol extends BaseProtocol<CartInstruction>{
     boolean waitflag=true;
@@ -23,7 +23,7 @@ public class CartInsProtocol extends BaseProtocol<CartInstruction>{
     }
     @Override
     protected String loadFromNet(int index) {
-         StringRequest cartInsRequest=new StringRequest(url, new Response.SuccessListener<String>() {
+        StringRequest cartInsRequest=new StringRequest(url, new Response.SuccessListener<String>() {
             @Override
             public void onResponse(String s) {
                 result =s;
@@ -39,7 +39,7 @@ public class CartInsProtocol extends BaseProtocol<CartInstruction>{
 
         HttpUtil.getRequestQueue().add(cartInsRequest);
 
-       if(mListener!=null) mListener.onLoading();
+        if(mListener!=null) mListener.onLoading();
         while(waitflag){
 
         }
@@ -66,7 +66,7 @@ public class CartInsProtocol extends BaseProtocol<CartInstruction>{
         mListener=listener;
     }
     public interface  CompleteListener{
-       void hasFinishLoading();
+        void hasFinishLoading();
         void onLoading();
     }
 

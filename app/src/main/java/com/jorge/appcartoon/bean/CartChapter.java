@@ -3,13 +3,13 @@ package com.jorge.appcartoon.bean;
 import java.util.List;
 
     /**
-     * Âş»­ÕÂ½Ú
+     * ç« èŠ‚æ¼«ç”»
      */
    public  class CartChapter {
 
-    //Á¬ÔØ
+    /**è¿è½½*/
     public String title;
-    //2Chapters
+    /**2Chapters*/
     public List<Chapter> data;
 
 

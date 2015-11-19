@@ -1,14 +1,14 @@
 package com.jorge.appcartoon.bean;
 
 /**
-     *Âş»­Íê½á×´Ì¬
-     */
-    public class CartStatus {
+ *æ¼«ç”»å®Œç»“çŠ¶æ€
+ */
+public class CartStatus {
 
-        //2309/3246/7568
-        public int tag_id;
+    //2309/3246/7568
+    public int tag_id;
 
-        // Á¬ÔØÖĞ/µ¢ÃÀ/¸ãĞ¦
-        public String tag_name;
-        
-    }
+    // è¿è½½ä¸­/è€½ç¾/æç¬‘
+    public String tag_name;
+
+}

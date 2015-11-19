@@ -9,7 +9,7 @@ import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 
 /**
- * @author：Jorge on 2015/11/18 11:50
+ * @author锛欽orge on 2015/11/18 11:50
  */
 public class MeasureGridLayoutManager extends GridLayoutManager {
 
@@ -103,7 +103,7 @@ public class MeasureGridLayoutManager extends GridLayoutManager {
                                    int heightSpec, int[] measuredDimension) {
         if (position < getItemCount()) {
             try {
-                View view = recycler.getViewForPosition(0);//fix 动态添加时报IndexOutOfBoundsException
+                View view = recycler.getViewForPosition(0);//fix 鍔ㄦ�佹坊鍔犳椂鎶ndexOutOfBoundsException
                 if (view != null) {
                     RecyclerView.LayoutParams p = (RecyclerView.LayoutParams) view.getLayoutParams();
                     int childWidthSpec = ViewGroup.getChildMeasureSpec(widthSpec,

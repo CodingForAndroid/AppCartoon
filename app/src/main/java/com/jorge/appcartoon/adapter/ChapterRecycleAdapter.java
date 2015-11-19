@@ -4,33 +4,31 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.jorge.appcartoon.R;
 import com.jorge.appcartoon.bean.CartChapter;
 import com.jorge.appcartoon.bean.Chapter;
-import com.jorge.appcartoon.util.LogUtils;
 import com.jorge.appcartoon.util.UIUtils;
 
 /**
- * ÕÂ½ÚÊÊÅäÆ÷RecycleView
+ * ç« èŠ‚é€‚é…å™¨ RecycleView
  *
- * @author£ºJorge on 2015/11/18 12:19
+ * @authorï¼šjorge on 2015/11/18 12:19
  */
 public class ChapterRecycleAdapter extends RecyclerView.Adapter<ChapterRecycleAdapter.ChapterHolder> implements View.OnClickListener {
 
     /**
-     * ÕÂ½Ú¸öÊı
+     * ç« èŠ‚ä¸ªæ•°
      */
     private int count;
     private CartChapter mChapter;
     /**
-     * ÊÇ·ñÕ¹Ê¾È«²¿item
+     * æ˜¯å¦å±•ç¤ºå…¨éƒ¨item
      */
     private boolean showType;
 
     /**
-     * @param chapter :ÕÂ½Ú ¶ÔÏó
-     * @param showAll £ºÊÇ·ñÏÔÊ¾È«²¿ÕÂ½Ú ¡¢Ä¬ÈÏ false
+     * @param chapter :ç« èŠ‚ å¯¹è±¡
+     * @param showAll ï¼šæ˜¯å¦æ˜¾ç¤ºå…¨éƒ¨ç« èŠ‚ ã€é»˜è®¤ false
      */
     public ChapterRecycleAdapter(CartChapter chapter, boolean showAll) {
         mChapter = chapter;
@@ -39,12 +37,12 @@ public class ChapterRecycleAdapter extends RecyclerView.Adapter<ChapterRecycleAd
     }
 
     /**
-     * ¶Ôµã»÷µÄ¼àÌı
+     * å¯¹ç‚¹å‡»çš„ç›‘å¬
      */
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
     /**
-     * ÕÂ½Úµã»÷ÊÂ¼ş½Ó¿Ú
+     * ç« èŠ‚ç‚¹å‡»äº‹ä»¶æ¥å£
      */
     public interface OnRecyclerViewItemClickListener {
         void onItemClick(View view, int position);
@@ -82,7 +80,7 @@ public class ChapterRecycleAdapter extends RecyclerView.Adapter<ChapterRecycleAd
     @Override
     public int getItemCount() {
         if (showType) {
-            //Ìí¼ÓÒ»¸ö¶îÍâµÄ¾ØĞÎ£¬×÷ÎªÊÕÆğ¡£
+            //æ·»åŠ ä¸€ä¸ªé¢å¤–çš„çŸ©å½¢ï¼Œä½œä¸ºæ”¶èµ·ã€‚
             return count+1;
         } else {
             if (0 < count && count <= 12) {
@@ -97,7 +95,7 @@ public class ChapterRecycleAdapter extends RecyclerView.Adapter<ChapterRecycleAd
     }
 
     /**
-     * ÊÇ·ñÏÔÊ¾È«²¿
+     * æ˜¯å¦æ˜¾ç¤ºå…¨éƒ¨
      *
      * @param type
      */
@@ -108,21 +106,21 @@ public class ChapterRecycleAdapter extends RecyclerView.Adapter<ChapterRecycleAd
     @Override
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
-            //×¢ÒâÕâÀïÊ¹ÓÃgetTag·½·¨»ñÈ¡Êı¾İ
+            //æ³¨æ„è¿™é‡Œä½¿ç”¨getTagæ–¹æ³•è·å–æ•°æ®
             mOnItemClickListener.onItemClick(v, (int) v.getTag());
         }
     }
 
     /**
-     * ÉèÖÃ¼àÌı
+     * è®¾ç½®ç›‘å¬
      *
-     * @param listener£º¼àÌıÆ÷
+     * @param listenerï¼šç›‘å¬å™¨
      */
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
         this.mOnItemClickListener = listener;
     }
 
-    // ÕÂ½Ú item
+    // ç« èŠ‚ item
     public class ChapterHolder extends RecyclerView.ViewHolder {
         TextView tv1;
 

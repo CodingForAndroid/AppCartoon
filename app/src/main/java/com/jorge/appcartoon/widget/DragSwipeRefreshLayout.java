@@ -9,10 +9,10 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * @author£ºJorge on 2015/11/18 17:27
+ * @authorï¼šJorge on 2015/11/18 17:27
  */
 public class DragSwipeRefreshLayout extends SwipeRefreshLayout {
-   private  ViewDragHelper   mDragHelper;
+    private  ViewDragHelper   mDragHelper;
     public DragSwipeRefreshLayout(Context context) {
         super(context);
     }
@@ -22,9 +22,9 @@ public class DragSwipeRefreshLayout extends SwipeRefreshLayout {
     }
 
     public void init(){
-           mDragHelper = ViewDragHelper.create(this, 1.0f, new DragHelperCallback());
-           /**ÉèÖÃ»¬¶¯±ßÔµ*/
-           mDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_ALL);
+        mDragHelper = ViewDragHelper.create(this, 1.0f, new DragHelperCallback());
+        /**è®¾ç½®æ»‘åŠ¨è¾¹ç¼˜*/
+        mDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_ALL);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class DragSwipeRefreshLayout extends SwipeRefreshLayout {
         }
 
         /**
-         * ºáÏòÍÏ¶¯
+         * æ¨ªå‘æ‹–åŠ¨
          * @param child
          * @param left
          * @param dx
@@ -66,7 +66,7 @@ public class DragSwipeRefreshLayout extends SwipeRefreshLayout {
         }
 
         /**
-         * ×İÏòÍÏ¶¯
+         * çºµå‘æ‹–åŠ¨
          * @param child
          * @param top
          * @param dy

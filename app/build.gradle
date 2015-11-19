@@ -34,5 +34,4 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'in.srain.cube:ultra-ptr:1.0.11'
-    compile 'me.imid.swipebacklayout.lib:library:1.0.0'
 }

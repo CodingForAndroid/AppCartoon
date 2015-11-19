@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ÍÆ¼öÒ³ £¬ÇëÇóÊı¾İ
- * @author£ºJorge on 2015/11/10 18:26
+ * æ¨èé¡µ ï¼Œè¯·æ±‚æ•°æ®
+ * @authorï¼šJorge on 2015/11/10 18:26
  */
 public class CartRecProtocol extends BaseProtocol<List<CartRecClassify>> {
     boolean waitflag=true;

@@ -3,7 +3,6 @@ package com.jorge.appcartoon.ui.activity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,21 +27,20 @@ import com.jorge.appcartoon.util.LogUtils;
 import com.jorge.appcartoon.util.UIUtils;
 import com.jorge.appcartoon.util.ViewUtils;
 import com.jorge.appcartoon.widget.MeasureGridLayoutManager;
-import com.jorge.appcartoon.widget.RevealLayout;
-
+import com.jorge.appcartoon.widget.RippleLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Âş»­½éÉÜÒ³
+ * æ¼«ç”»ä»‹ç»é¡µ
  *
- * @author£ºJorge on 2015/11/16 10:13
+ * @authorï¼šJorge on 2015/11/16 10:13
  */
 public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.layout1)
-    RevealLayout layout1;
+    RippleLayout layout1;
     @Bind(R.id.scroll_view)
     ScrollView scrollView;
     @Bind(R.id.swipe)
@@ -98,15 +96,15 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
     @Bind(R.id.recycle)
     RecyclerView recycle;
 
-    /**»ñÈ¡µ½µÄ×÷Æ·ĞÅÏ¢*/
+    /**è·å–åˆ°çš„ä½œå“ä¿¡æ¯*/
     private CartInstruction cartInstruction = new CartInstruction();
-    /**ÃèÊöÊÇ·ñÏêÇé*/
+    /**æè¿°æ˜¯å¦è¯¦æƒ…*/
     public static boolean hasOpen = false;
-    /**ÊÇ·ñÏÔÊ¾È«²¿ÕÂ½Ú*/
+    /**æ˜¯å¦æ˜¾ç¤ºå…¨éƒ¨ç« èŠ‚*/
     private boolean showAllChapter = false;
-    /**Êı¾İÇëÇóĞ­Òé*/
+    /**æ•°æ®è¯·æ±‚åè®®*/
     private CartInsProtocol cartInsProtocol;
-    /**¼ÆËãË¢ĞÂ´ÎÊı*/
+    /**è®¡ç®—åˆ·æ–°æ¬¡æ•°*/
     private int i = 1;
 
     @Override
@@ -137,10 +135,11 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
 
             @Override
             public void onLoading() {
-                swipe.setRefreshing(false);
+
                 UIUtils.post(new Runnable() {
                     @Override
                     public void run() {
+                        swipe.setRefreshing(false);
                         ViewUtils.showView(loadingView);
                         ViewUtils.showView(progressbar);
                     }
@@ -191,49 +190,49 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
     }
 
     public void setData() {
-        /**×÷Õß*/
+        /**ä½œè€…*/
         tvAuthor.setText("  " + cartInstruction.authors.get(0).tag_name);
-        /**ÉèÖÃ±êÌâ*/
+        /**è®¾ç½®æ ‡é¢˜*/
         tvTitle.setText(cartInstruction.title);
-        /**ÈÈ¶È*/
+        /**çƒ­åº¦*/
         tvHot.setText("  " + cartInstruction.hot_num + "");
-        /**¶©ÔÄ*/
+        /**è®¢é˜…*/
         tvSubscribe.setText("  " + cartInstruction.subscribe_num + "");
-        /**cover Í¼Æ¬*/
+        /**cover å›¾ç‰‡*/
         ImageLoaderHelper.getInstance().loadImage(cartInstruction.cover.split("\\?")[0], ivCover);
-        /**cover tvUpdateTime Ê±¼ä*/
+        /**cover tvUpdateTime æ—¶é—´*/
         tvUpdateTime.setText("  " + DateFormatUtil.formatTime(DateFormatUtil.format(cartInstruction.last_updatetime)));
-        /**tvType  ·ÖÀà*/
+        /**tvType  åˆ†ç±»*/
         String classify = "";
         for (int i = 0; i < cartInstruction.types.size(); i++) {
             classify += cartInstruction.types.get(i).tag_name + " ";
         }
         tvType.setText("  " + classify.substring(0, classify.length() - 1));
-        /**ÉèÖÃÃèÊö*/
+        /**è®¾ç½®æè¿°*/
         tvBriefDes.setText(cartInstruction.description.length() >= UIUtils.getInteger(R.integer.txt_desc_max_length) ? cartInstruction.description.substring(0, UIUtils.getInteger(R.integer.txt_desc_max_length)) + "..." : cartInstruction.description);
-        /**ÉèÖÃÆÀÂÛÊı*/
+        /**è®¾ç½®è¯„è®ºæ•°*/
         tvDiscuss.setText(String.format(UIUtils.getString(R.string.txt_discuss), cartInstruction.comment.comment_count));
-        /**¸ü¶àÆÀÂÛ*/
+        /**æ›´å¤šè¯„è®º*/
         tvMoreDiscuss.setText(String.format(UIUtils.getString(R.string.txt_more_discuss), cartInstruction.comment.comment_count));
-        /**³õÊ¼»¯ÆÀÂÛ*/
+        /**åˆå§‹åŒ–è¯„è®º*/
         CartComment comment = cartInstruction.comment;
         if (comment.comment_count <= 0) return;
-        /**Í·Ïñ*/
+        /**å¤´åƒ*/
         CartComment.CommentInfo commentInfo = comment.latest_comment.get(0);
         ImageLoaderHelper.getInstance().loadImage(commentInfo.avatar.split("\\?")[0], profileImage);
-        /**êÇ³Æ*/
+        /**æ˜µç§°*/
         tvNick.setText(commentInfo.nickname);
-        /**ÄÚÈİ*/
+        /**å†…å®¹*/
         tvContent.setText(commentInfo.content.length() >= UIUtils.getInteger(R.integer.txt_desc_max_length) ? commentInfo.content.substring(0, UIUtils.getInteger(R.integer.txt_desc_max_length)) + "..." : commentInfo.content);
-        /**ÆÀÂÛÊ±¼ä*/
+        /**è¯„è®ºæ—¶é—´*/
         tvTime.setText(DateFormatUtil.formatTime(DateFormatUtil.format(commentInfo.createtime)));
-//        tv_whole ²é¿´È«ÎÄ
+//        tv_whole æŸ¥çœ‹å…¨æ–‡
 
-        /**³õÊ¼»¯RecycleView*/
+        /**åˆå§‹åŒ–RecycleView*/
         recycle.setLayoutManager(new MeasureGridLayoutManager(this, 4));
         mChapterAdapter = new ChapterRecycleAdapter(cartInstruction.chapters.get(0), showAllChapter);
         recycle.setAdapter(mChapterAdapter);
-        /**ÕÂ½Ú µã»÷*/
+        /**ç« èŠ‚ ç‚¹å‡»*/
         mChapterAdapter.setOnItemClickListener(new ChapterRecycleAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -257,15 +256,18 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
         });
     }
 
-    //ÕÂ½Ú adapter
+    //ç« èŠ‚ adapter
     private ChapterRecycleAdapter mChapterAdapter;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_cart_ins);
         ButterKnife.bind(this);
+        /**è®¾ç½®å…è®¸æ»‘åŠ¨é€€å‡ºç•Œé¢*/
+
+
         toolbar.setTitle("");
-        /** ÉèÖÃºóÔÚ¸Ä±ä²»ÉúĞ§*/
+        /** è®¾ç½®ååœ¨æ”¹å˜ä¸ç”Ÿæ•ˆ*/
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -273,7 +275,7 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
                 finish();
             }
         });
-        /** ¶¥²¿Ë¢ĞÂµÄÑùÊ½*/
+        /** é¡¶éƒ¨åˆ·æ–°çš„æ ·å¼*/
         swipe.setColorSchemeResources(android.R.color.holo_red_light,
                 android.R.color.holo_green_light,
                 android.R.color.holo_blue_bright,

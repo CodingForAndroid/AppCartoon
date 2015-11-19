@@ -3,12 +3,12 @@ package com.jorge.appcartoon.bean;
 import java.util.List;
 
 /**
-     * ×÷Æ·ÆÀÂÛ
-     */
-    public class CartComment {
+ * ä½œå“è¯„è®º
+ */
+public class CartComment {
     //30
     public int comment_count;
-    // ×î½üÆÀÂÛ 2£»
+    // æœ€è¿‘è¯„è®º 2ï¼›
     public List<CommentInfo> latest_comment;
 
     public class CommentInfo {
@@ -16,11 +16,11 @@ import java.util.List;
         public int comment_id;
         //2947149
         public int uid;
-        //³¯‚}›ö×Ó
+        //æœå€‰æ¶¼å­
         public String nickname;
         //http://images.dmzj.com/user/58/33/58333e3d0ebb4219033f5aafa3620584.png
         public String avatar;
-        // /c°Ú¶¯
+        // /cæ‘†åŠ¨
         public String content;
         //1446782285
         public int createtime;

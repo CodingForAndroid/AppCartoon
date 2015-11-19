@@ -1,16 +1,13 @@
 package com.jorge.appcartoon.ui.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 
 import com.jorge.appcartoon.R;
+import com.jorge.appcartoon.widget.swipe.SwipeBackActivity;
 
-import me.imid.swipebacklayout.lib.SwipeBackLayout;
-import me.imid.swipebacklayout.lib.ViewDragHelper;
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
- * @author£ºJorge on 2015/11/18 18:09
+ * @authorï¼šJorge on 2015/11/18 18:09
  */
 public class SwipeFinishActivity extends SwipeBackActivity {
     @Override
@@ -19,7 +16,9 @@ public class SwipeFinishActivity extends SwipeBackActivity {
         setContentView(R.layout.layout_cart_ins_top);
 
 
-       SwipeBackLayout mSwipeBackLayout = getSwipeBackLayout();
-        mSwipeBackLayout.setEdgeTrackingEnabled(ViewDragHelper.EDGE_ALL);
+//      My SwipeBackLayout mSwipeBackLayout = getSwipeBackLayout();
+//        mSwipeBackLayout.setEdgeTrackingEnabled(ViewDragHelper.EDGE_ALL);
+////        mSwipeBackLayout.setEdgeTrackingEnabled(ViewDragHelper.EDGE_ALL);
+//        setSwipeBackEnable(true);
     }
 }
