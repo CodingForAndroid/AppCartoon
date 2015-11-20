@@ -142,8 +142,8 @@ public class ImageCycleView extends LinearLayout {
 //		}else{
 //			this.setVisibility(View.VISIBLE);
 //		}
-		imageNameList=new ArrayList<>();
-		ArrayList<String> imageUrlList=new ArrayList<>();
+		imageNameList=new ArrayList<String>();
+		ArrayList<String> imageUrlList=new ArrayList<String>();
 		for(int i=0;i<list.size();i++){
 //			list.get(i).title;
 //			list.get(i).cover;
@@ -270,8 +270,8 @@ public class ImageCycleView extends LinearLayout {
 		/**
 		 * 图片资源列表
 		 */
-		private ArrayList<String> mAdList = new ArrayList<>();
-		private ArrayList<String> nameList = new ArrayList<>();
+		private ArrayList<String> mAdList = new ArrayList<String>();
+		private ArrayList<String> nameList = new ArrayList<String>();
 
 		/**
 		 * 广告图片点击监听
@@ -284,7 +284,7 @@ public class ImageCycleView extends LinearLayout {
 			this.mAdList = adList;
 			this.nameList = nameList;
 			mImageCycleViewListener = imageCycleViewListener;
-			mImageViewCacheList = new ArrayList<>();
+			mImageViewCacheList = new ArrayList<ClickableImageView>();
 		}
 
 		@Override

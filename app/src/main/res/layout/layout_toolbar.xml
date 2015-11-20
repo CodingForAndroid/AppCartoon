@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
-    android:title=" "
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:navigationIcon="@mipmap/icon_ins_left_arrow_2x"
-    android:minHeight="?attr/actionBarSize">
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@mipmap/icon_ins_left_arrow_2x"
+        android:minHeight="?attr/actionBarSize">
         <TextView
-            android:visibility="gone"
+            android:id="@+id/tv_title"
+            style="@style/txt_style_size_high"
             android:textColor="@color/blue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="www.dastorm.com"
-            android:textSize="20sp"
             android:textStyle="bold" />
-</android.support.v7.widget.Toolbar>
+    </android.support.v7.widget.Toolbar>
+</RelativeLayout>

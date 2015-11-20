@@ -103,7 +103,7 @@ public interface RevealAnimator {
         WeakReference<RevealAnimator> mReference;
 
         RevealFinishedGingerbread(RevealAnimator target) {
-            mReference = new WeakReference<>(target);
+            mReference = new WeakReference<RevealAnimator>(target);
         }
 
         @Override

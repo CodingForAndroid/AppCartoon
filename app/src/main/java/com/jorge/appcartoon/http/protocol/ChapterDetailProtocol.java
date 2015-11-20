@@ -5,25 +5,26 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.jorge.appcartoon.bean.CartInstruction;
+import com.jorge.appcartoon.bean.ChapterDetail;
 import com.jorge.appcartoon.http.ApiUtil;
 import com.jorge.appcartoon.http.HttpUtil;
 import com.jorge.appcartoon.util.LogUtils;
 
 /**
- * 动漫介绍页，请求数据
- * @author：Jorge on 2015/11/16 12:21
+ * @author：Jorge on 2015/11/20 15:27
  */
-public class CartInsProtocol extends BaseProtocol<CartInstruction>{
+public class ChapterDetailProtocol  extends BaseProtocol<ChapterDetail>{
     boolean waitflag=true;
     String  result ="";
     private String  url="";
-    public CartInsProtocol(String url){
+    public ChapterDetailProtocol(String url){
         LogUtils.e(url);
         this.url=url;
     }
+
     @Override
     protected String loadFromNet(int index) {
-        StringRequest cartInsRequest=new StringRequest(url, new Response.SuccessListener<String>() {
+        StringRequest chapterDetailRequest=new StringRequest(url, new Response.SuccessListener<String>() {
             @Override
             public void onResponse(String s) {
                 result =s;
@@ -36,10 +37,7 @@ public class CartInsProtocol extends BaseProtocol<CartInstruction>{
                 waitflag=false;
             }
         });
-
-        HttpUtil.getRequestQueue().add(cartInsRequest);
-
-//        if(mListener!=null) mListener.onLoading();
+        HttpUtil.getRequestQueue().add(chapterDetailRequest);
         while(waitflag){
 
         }
@@ -48,16 +46,13 @@ public class CartInsProtocol extends BaseProtocol<CartInstruction>{
 
     @Override
     protected String getKey() {
-        return "CartInsProtocol";
+        return "ChapterDetailProtocol";
     }
 
     @Override
-    protected CartInstruction parseData(String json) {
+    protected ChapterDetail parseData(String json) {
         Gson gson = new Gson();
-        CartInstruction cartIns=  gson.fromJson(json, CartInstruction.class);
-//        if(mListener!=null) mListener.hasFinishLoading();
-        return cartIns;
+        return   gson.fromJson(json,ChapterDetail.class);
     }
-
 
 }

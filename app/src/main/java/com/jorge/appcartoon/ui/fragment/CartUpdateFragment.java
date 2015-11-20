@@ -22,12 +22,6 @@ import butterknife.ButterKnife;
  */
 public class CartUpdateFragment extends BaseFragment {
 
-//    @Bind(R.id.fab)
-//    FloatingActionButton fab;
-//    @Bind(R.id.toolbar_footer)
-//    Toolbar toolbarFooter;
-//    @Bind(R.id.root)
-//    RelativeLayout root;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,14 +30,7 @@ public class CartUpdateFragment extends BaseFragment {
 
     @Override
     protected void initViewsAndEvents() {
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (fab.getVisibility() == View.VISIBLE) {
-//                    FabTransformation.with(fab).transformTo(toolbarFooter);
-//                }
-//            }
-//        });
+
 
     }
 
@@ -54,22 +41,9 @@ public class CartUpdateFragment extends BaseFragment {
 
     @Override
     protected View createLoadedView() {
-        View view = UIUtils.inflate(R.layout.fragment_recommend);
-        ButterKnife.bind(this, view);
-        return view;
+
+        return  UIUtils.inflate(R.layout.fragment_recommend);
     }
-
-//    public  void firstClick(View view){
-//        FabTransformation.with(fab).transformFrom(toolbarFooter);
-//    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
 
 
 }

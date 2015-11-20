@@ -40,6 +40,7 @@ public class CartoonFragment extends BaseFragment {
         //tab的初始化、tab和ViewPager的互相绑定
         mPageTabs.setViewPager(mPager);
         mPageTabs.setOnPageChangeListener(new MyOnPageChangeListener());
+        mPager.setOffscreenPageLimit(5);
     }
 
     @Override
@@ -96,7 +97,7 @@ public class CartoonFragment extends BaseFragment {
             // ViewPager页面被选中的回调
             BaseFragment fragment = FragmentFactory.createFragment(index);
             // 当页面被选中 再显示要加载的页面....防止ViewPager提前加载(ViewPager一般加载三个，自己，左一个，右一个)
-//            fragment.show();// 调用show方法加载pager里面的数据
+            fragment.show();// 调用show方法加载pager里面的数据
         }
     }
 }

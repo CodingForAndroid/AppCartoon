@@ -12,7 +12,7 @@ final class SupportAnimatorPreL extends SupportAnimator {
 
     SupportAnimatorPreL(Animator animator, RevealAnimator target) {
         super(target);
-        mAnimator = new WeakReference<>(animator);
+        mAnimator = new WeakReference<Animator>(animator);
     }
 
     @Override

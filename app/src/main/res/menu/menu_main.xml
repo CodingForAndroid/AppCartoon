@@ -5,11 +5,23 @@
 
     <item android:id="@+id/action_down"
         android:title="下载"
+        android:visible="true"
         android:color="@color/blue"
         android:orderInCategory="80"
         app:showAsAction="ifRoom" />
 
-
+    <item android:id="@+id/help"
+        android:visible="false"
+        android:title="帮助"
+        android:color="@color/blue"
+        android:orderInCategory="80"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/acd"
+        android:visible="false"
+        android:title="下载"
+        android:color="@color/blue"
+        android:orderInCategory="80"
+        app:showAsAction="ifRoom" />
     <item android:id="@+id/action_settings"
         android:title=" "
         android:orderInCategory="100"

@@ -33,9 +33,12 @@ public abstract class BaseProtocol<Data> {
      * @return
      */
     public Data load(int index,boolean localFetchFirst) {
+
+        if(mListener!=null) mListener.onLoading();
         SystemClock.sleep(1000);// 休息1秒，防止加载过快，看不到界面变化效果
         String json = null;
         // 1.从本地缓存读取数据，查看缓存时间
+
         if(localFetchFirst){
           json = loadFromLocal(index);
         }
@@ -50,8 +53,14 @@ public abstract class BaseProtocol<Data> {
                 saveToLocal(json, index);
             }
         }
+
+
+
+
+        LogUtils.e(json);
         SystemClock.sleep(3000);// 休息1秒，防止加载过快，看不到界面变化效果
-        return parseFromJson(json);
+        return  parseFromJson(json);
+
     }
 
     /** 从本地加载协议 */
@@ -79,6 +88,11 @@ public abstract class BaseProtocol<Data> {
     }
 
     /** 从网络加载协议 */
+    /**
+     * 从网络加载协议
+     * @param index
+     * @return
+     */
     protected  abstract String loadFromNet(int index) ;
 
     /** 保存到本地 */
@@ -102,7 +116,18 @@ public abstract class BaseProtocol<Data> {
     protected abstract String getKey();
 
     /** 从json中解析 */
-    protected abstract Data parseFromJson(String json);
+    protected  Data parseFromJson(String json){
+        Data data=  parseData(json);
+        if(mListener!=null) mListener.hasFinishLoading();
+        return  data;
+    };
+
+    /**
+     * 解析 数据
+     * @param json： 服务器返回的json 数据
+     * @return
+     */
+    protected  abstract  Data parseData(String json);
 
     /***
      *  联网 加载中动画。。。
@@ -110,6 +135,17 @@ public abstract class BaseProtocol<Data> {
     public interface LoadingAnimation {
           void  onLoading();
          void  afterLoading();
+    }
+
+
+    // 请求网络。跟 解析完成的监听器
+    private CompleteListener mListener;
+    public void setOnCompleteListener(CompleteListener listener){
+        mListener=listener;
+    }
+    public interface  CompleteListener{
+        void hasFinishLoading();
+        void onLoading();
     }
 }
 

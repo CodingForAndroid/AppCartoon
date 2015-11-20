@@ -1,5 +1,6 @@
 package com.jorge.appcartoon.ui.activity;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import com.jorge.appcartoon.ThreadManager;
 import com.jorge.appcartoon.adapter.ChapterRecycleAdapter;
 import com.jorge.appcartoon.bean.CartComment;
 import com.jorge.appcartoon.bean.CartInstruction;
+import com.jorge.appcartoon.bean.Chapter;
 import com.jorge.appcartoon.http.ApiUtil;
 import com.jorge.appcartoon.http.protocol.CartInsProtocol;
 import com.jorge.appcartoon.util.DateFormatUtil;
@@ -97,7 +99,7 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
     RecyclerView recycle;
 
     /**获取到的作品信息*/
-    private CartInstruction cartInstruction = new CartInstruction();
+    private CartInstruction cartInstruction ;
     /**描述是否详情*/
     public static boolean hasOpen = false;
     /**是否显示全部章节*/
@@ -151,16 +153,9 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
 
     @Override
     public void init() {
-        int current_id = getIntent().getIntExtra(ApiUtil.COMIC_ID, 17149);
-        cartInsProtocol = new CartInsProtocol(current_id);
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                cartInstruction = cartInsProtocol.load(0, false);
-            }
-        };
-        ThreadManager.getLongPool().execute(runnable);
-
+        // 根据 commic_id 获取介绍页数据
+        String  url= ApiUtil.CART_INS_URL.replace(ApiUtil.REPLACE_COMIC_ID ,String.valueOf(getIntent().getIntExtra(ApiUtil.REPLACE_COMIC_ID, 17149)));
+        cartInsProtocol = new CartInsProtocol(url);
         cartInsProtocol.setOnCompleteListener(new CartInsProtocol.CompleteListener() {
             @Override
             public void hasFinishLoading() {
@@ -186,7 +181,13 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
 
             }
         });
-
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                cartInstruction = cartInsProtocol.load(0, false);
+            }
+        };
+        ThreadManager.getLongPool().execute(runnable);
     }
 
     public void setData() {
@@ -229,7 +230,7 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
 //        tv_whole 查看全文
 
         /**初始化RecycleView*/
-        recycle.setLayoutManager(new MeasureGridLayoutManager(this, 4));
+        recycle.setLayoutManager(new MeasureGridLayoutManager(this, UIUtils.getInteger(R.integer.chapter_items)));
         mChapterAdapter = new ChapterRecycleAdapter(cartInstruction.chapters.get(0), showAllChapter);
         recycle.setAdapter(mChapterAdapter);
         /**章节 点击*/
@@ -238,20 +239,25 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
             public void onItemClick(View view, int position) {
                 LogUtils.e("position:" + position + "   cartInstruction.chapters.get(0).data.size():" + cartInstruction.chapters.get(0).data.size());
                 if (position == cartInstruction.chapters.get(0).data.size() && showAllChapter) {
+                    /**此处表示点击收起章节*/
                     showAllChapter = false;
                     mChapterAdapter.setShowType(showAllChapter);
                     mChapterAdapter.notifyDataSetChanged();
                     return;
                 }
                 if (position == 11 && !showAllChapter) {
+                    /**此处表示点击展开全部章节*/
                     showAllChapter = true;
                     mChapterAdapter.setShowType(showAllChapter);
                     mChapterAdapter.notifyDataSetChanged();
                 } else {
-                    LogUtils.e(cartInstruction.chapters.get(0).data.get(position).toString());
+                    //当前章节 传递过去、
+                     Chapter chapter= cartInstruction.chapters.get(0).data.get(position);
+                    Intent intent=new Intent(CartInsActivity.this,EnjoyActivity.class);
+                    intent.putExtra(ApiUtil.REPLACE_COMIC_ID,""+cartInstruction.id);
+                    intent.putExtra(ApiUtil.REPLACE_CHAPTER_ID,""+chapter.chapter_id);
+                    UIUtils.startActivity(intent);
                 }
-
-
             }
         });
     }
@@ -264,7 +270,6 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
         setContentView(R.layout.activity_cart_ins);
         ButterKnife.bind(this);
         /**设置允许滑动退出界面*/
-
 
         toolbar.setTitle("");
         /** 设置后在改变不生效*/
@@ -317,8 +322,6 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
             }
         });
         swipe.setOnRefreshListener(this);
-
-
     }
 
     @Override

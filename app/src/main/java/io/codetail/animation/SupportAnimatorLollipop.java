@@ -14,7 +14,7 @@ final class SupportAnimatorLollipop extends SupportAnimator {
 
     SupportAnimatorLollipop(Animator animator, RevealAnimator target) {
         super(target);
-        mAnimator = new WeakReference<>(animator);
+        mAnimator = new WeakReference<Animator>(animator);
     }
 
     @Override

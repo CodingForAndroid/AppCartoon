@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.v7.widget.Toolbar
+<!--    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,13 +14,15 @@
             android:textColor="@color/blue"
             android:layout_gravity="center"
             android:textStyle="bold" />
-    </android.support.v7.widget.Toolbar>
+    </android.support.v7.widget.Toolbar>-->
+    <include layout="@layout/layout_toolbar" android:id="@+id/layout_toolbar"/>
     <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/layout_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/swipe">
  <ScrollView
+     android:scrollbars="none"
      android:id="@+id/scroll_view"
      android:layout_width="fill_parent"
      android:layout_height="wrap_content">
@@ -87,10 +89,10 @@
 
              <android.support.v7.widget.RecyclerView
                  android:id="@+id/recycle"
+                 android:clickable="false"
                  android:layout_margin="10dp"
                  android:layout_width="fill_parent"
                  android:layout_height="wrap_content"/>
-
              <RelativeLayout
                  android:layout_margin="@dimen/activity_horizontal_padding"
                  android:layout_width="fill_parent"
@@ -122,7 +124,7 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <View
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/layout_toolbar"
         android:visibility="visible"
         android:id="@+id/loading_view"
         android:background="@color/white"

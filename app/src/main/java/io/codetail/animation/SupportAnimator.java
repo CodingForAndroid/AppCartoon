@@ -9,7 +9,7 @@ public abstract class SupportAnimator {
     WeakReference<RevealAnimator> mTarget;
 
     public SupportAnimator(RevealAnimator target) {
-        mTarget = new WeakReference<>(target);
+        mTarget = new WeakReference<RevealAnimator>(target);
     }
 
     /**

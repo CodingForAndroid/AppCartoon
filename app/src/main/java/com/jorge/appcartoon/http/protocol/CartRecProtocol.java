@@ -24,7 +24,7 @@ public class CartRecProtocol extends BaseProtocol<List<CartRecClassify>> {
     String  result ="";
     @Override
     protected String loadFromNet(int index) {
-        StringRequest cartRecRequest=new StringRequest(ApiUtil.CART_RECOMMEND, new Response.SuccessListener<String>() {
+        StringRequest cartRecRequest=new StringRequest(ApiUtil.CART_RECOMMEND_URL, new Response.SuccessListener<String>() {
             @Override
             public void onResponse(String s) {
                 result =s;
@@ -51,15 +51,13 @@ public class CartRecProtocol extends BaseProtocol<List<CartRecClassify>> {
     }
 
     @Override
-    protected List<CartRecClassify> parseFromJson(String json) {
+    protected List<CartRecClassify> parseData(String json) {
         Gson gson = new Gson();
-        ArrayList<CartRecClassify> resultList = new ArrayList<>();
+        ArrayList<CartRecClassify> resultList = new ArrayList<CartRecClassify>();
         try {
             JSONArray array=new JSONArray(json);
             for (int i = 0; i < array.length(); i++) {
-
                 CartRecClassify item=    gson.fromJson(array.optString(i), CartRecClassify.class);
-
                 resultList.add(item);
             }
         } catch (JSONException e) {

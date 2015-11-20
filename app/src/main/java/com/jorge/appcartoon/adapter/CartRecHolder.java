@@ -243,7 +243,7 @@ public void setTextDrawable(TextView textView,int resId){
             Intent intent= new Intent(UIUtils.getContext(),CartInsActivity.class);
 //            Intent intent= new Intent(UIUtils.getContext(),SwipeFinishActivity.class);
 //            Intent intent= new Intent(UIUtils.getContext(),MySipeFinishActivity .class);
-            intent.putExtra(ApiUtil.COMIC_ID,comic_id);
+            intent.putExtra(ApiUtil.REPLACE_COMIC_ID,comic_id);
             UIUtils.showToastSafe(""+comic_id);
             UIUtils.startActivity(intent);
         }

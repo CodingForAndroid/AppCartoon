@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.jorge.appcartoon"
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 17
         versionCode 1
         versionName "1.0"
     }
@@ -17,9 +17,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        encoding "UTF-8"
+    }
 }
 
 dependencies {
+/*    compile fileTree(ledir: 'libs', include: ['*.jar'])*/
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('libs/Volley.jar')
     compile files('libs/imageloder_1.9.4_4cartoon.jar')

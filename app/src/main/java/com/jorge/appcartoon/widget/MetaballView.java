@@ -26,7 +26,7 @@ public class MetaballView extends View {
     private final int ITEM_DIVIDER = 60;
     private final float SCALE_RATE = 0.3f;
     private float maxLength;
-    private ArrayList<Circle> circlePaths = new ArrayList<>();
+    private ArrayList<Circle> circlePaths = new ArrayList<Circle>();
     private float mInterpolatedTime;
     private MoveAnimation wa;
     private Circle circle;

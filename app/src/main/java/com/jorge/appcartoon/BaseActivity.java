@@ -1,6 +1,8 @@
 package com.jorge.appcartoon;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import com.jorge.appcartoon.widget.swipe.SwipeBackActivity;
 
@@ -18,12 +20,14 @@ public  abstract class BaseActivity extends SwipeBackActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //
 
         init();
         initView();
         overrideSlideEnterTransition();
         addListener();
+
+
+
     }
 
     @Override

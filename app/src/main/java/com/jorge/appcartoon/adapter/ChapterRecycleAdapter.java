@@ -26,6 +26,7 @@ public class ChapterRecycleAdapter extends RecyclerView.Adapter<ChapterRecycleAd
      */
     private boolean showType;
 
+    private int  default_chapters;
     /**
      * @param chapter :章节 对象
      * @param showAll ：是否显示全部章节 、默认 false
@@ -34,6 +35,8 @@ public class ChapterRecycleAdapter extends RecyclerView.Adapter<ChapterRecycleAd
         mChapter = chapter;
         count = mChapter.data.size();
         showType = showAll;
+
+        default_chapters= UIUtils.getInteger(R.integer.default_chapters_show);
     }
 
     /**
@@ -74,7 +77,6 @@ public class ChapterRecycleAdapter extends RecyclerView.Adapter<ChapterRecycleAd
                 }
             }
         }
-
     }
 
     @Override
@@ -83,15 +85,14 @@ public class ChapterRecycleAdapter extends RecyclerView.Adapter<ChapterRecycleAd
             //添加一个额外的矩形，作为收起。
             return count+1;
         } else {
-            if (0 < count && count <= 12) {
+            if (0 < count && count <= default_chapters) {
                 return count;
-            } else if (count > 12) {
-                return 12;
+            } else if (count > default_chapters) {
+                return default_chapters;
             } else {
                 return 0;
             }
         }
-
     }
 
     /**

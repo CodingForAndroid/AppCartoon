@@ -19,6 +19,6 @@ public class SwipeFinishActivity extends SwipeBackActivity {
 //      My SwipeBackLayout mSwipeBackLayout = getSwipeBackLayout();
 //        mSwipeBackLayout.setEdgeTrackingEnabled(ViewDragHelper.EDGE_ALL);
 ////        mSwipeBackLayout.setEdgeTrackingEnabled(ViewDragHelper.EDGE_ALL);
-//        setSwipeBackEnable(true);
+        setSwipeBackEnable(true);
     }
 }

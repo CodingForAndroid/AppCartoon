@@ -52,7 +52,7 @@ public class ViewAnimationUtils {
 
         RevealAnimator revealLayout = (RevealAnimator) view.getParent();
         revealLayout.attachRevealInfo(new RevealInfo(centerX, centerY, startRadius, endRadius,
-                new WeakReference<>(view)));
+                new WeakReference<View>(view)));
 
         if (LOLLIPOP_PLUS) {
             return new SupportAnimatorLollipop(android.view.ViewAnimationUtils

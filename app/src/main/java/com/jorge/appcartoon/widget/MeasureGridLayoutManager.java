@@ -9,6 +9,7 @@ import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 
 /**
+ * 可以再scrollview 中显示正确高度的 Recycle、Manager
  * @author：Jorge on 2015/11/18 11:50
  */
 public class MeasureGridLayoutManager extends GridLayoutManager {
