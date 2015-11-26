@@ -48,7 +48,7 @@ public class CartInsProtocol extends BaseProtocol<CartInstruction>{
 
     @Override
     protected String getKey() {
-        return "CartInsProtocol";
+        return url;
     }
 
     @Override

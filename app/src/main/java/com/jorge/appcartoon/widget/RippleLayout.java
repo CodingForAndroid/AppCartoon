@@ -53,12 +53,14 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.jorge.appcartoon.R;
+import com.jorge.appcartoon.util.LogUtils;
 
 /**
  * 水波纹效果的父布局，包裹子布局，子布局需要 clickable :true
@@ -175,6 +177,7 @@ public class RippleLayout extends LinearLayout {
 			//根据手指落下的位置，确定点击到哪个View身上
 			targetView = getTargetView(this, x, y);
 //			System.out.println("targetView:"+targetView.toString());
+
 			if (targetView != null && targetView.isEnabled()) {
 				mTargetView = targetView;
 				initParametersForChild(event, targetView);
@@ -207,14 +210,14 @@ public class RippleLayout extends LinearLayout {
 	public View getTargetView(View view, int x, int y) {
 		View target = null;
 		ArrayList<View> views = view.getTouchables();
-System.out.println("view:"+views.size());
-		for (View child : views)
-			
+		for (View child : views){
+			/**这里让RecycleView 取消水波纹效果、项目需要*/
+//			if(child.getId()==R.id.ll_recyle) return target;
 			if (isTouchPointInView(child, x, y)) {
 				target = child;
 				break;
 			}
-//		System.out.println("child:"+child.toString());
+		}
 		return target;
 	}
 

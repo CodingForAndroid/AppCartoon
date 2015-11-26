@@ -34,12 +34,6 @@ public class TabFragment extends BaseFragment implements View.OnClickListener {
     private int currentTab = 0;
     private Drawable cartoonSelected, cartoonNormal, newsSelected, newsNromal, novelSelected,
             novelNormal, mineSelected  , mineNormal;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.fragment_tab);
-    }
-
 
     /**
      * 初始化Tab 圖標

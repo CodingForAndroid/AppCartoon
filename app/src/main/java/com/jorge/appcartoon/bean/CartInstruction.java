@@ -1,12 +1,16 @@
 package com.jorge.appcartoon.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 漫画介绍页 数据
  * @author：Jorge on 2015/11/16 12:25
  */
-public class CartInstruction {
+public class CartInstruction implements Parcelable {
 //    {
 //        "id": 20706,
 //            "islong": 2,
@@ -142,4 +146,91 @@ public class CartInstruction {
     public  CartComment comment;
 
 
+    protected CartInstruction(Parcel in) {
+        id = in.readInt();
+        islong = in.readInt();
+        title = in.readString();
+        is_dmzj = in.readInt();
+        cover = in.readString();
+        description = in.readString();
+        last_updatetime = in.readLong();
+        copyright = in.readString();
+        first_letter = in.readString();
+        hot_num = in.readString();
+        uid = in.readString();
+        status = in.createTypedArrayList(CartStatus.CREATOR);
+        types = in.createTypedArrayList(CartStatus.CREATOR);
+        authors = in.createTypedArrayList(CartStatus.CREATOR);
+        subscribe_num = in.readInt();
+        chapters = in.createTypedArrayList(CartChapter.CREATOR);
+        author_notice = in.readString();
+        comic_notice = in.readString();
+        comment = in.readParcelable(CartComment.class.getClassLoader());
+    }
+
+    public static final Creator<CartInstruction> CREATOR = new Creator<CartInstruction>() {
+        @Override
+        public CartInstruction createFromParcel(Parcel in) {
+            return new CartInstruction(in);
+        }
+
+        @Override
+        public CartInstruction[] newArray(int size) {
+            return new CartInstruction[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeInt(id);
+        dest.writeLong(islong);
+        dest.writeString(title);
+        dest.writeInt(is_dmzj);
+        dest.writeString(cover);
+        dest.writeString(description);
+        dest.writeLong(last_updatetime);
+        dest.writeString(copyright);
+        dest.writeString(first_letter);
+        dest.writeString(hot_num);
+        dest.writeString(uid);
+        dest.writeTypedList(status);
+        dest.writeTypedList(types);
+        dest.writeTypedList(authors);
+        dest.writeInt(subscribe_num);
+        dest.writeTypedList(chapters);
+        dest.writeString(author_notice);
+        dest.writeString(comic_notice);
+        dest.writeValue(comment);
+    }
+
+    @Override
+    public String toString() {
+        return "CartInstruction{" +
+                "author_notice='" + author_notice + '\'' +
+                ", id=" + id +
+                ", islong=" + islong +
+                ", title='" + title + '\'' +
+                ", is_dmzj=" + is_dmzj +
+                ", cover='" + cover + '\'' +
+                ", description='" + description + '\'' +
+                ", last_updatetime=" + last_updatetime +
+                ", copyright='" + copyright + '\'' +
+                ", first_letter='" + first_letter + '\'' +
+                ", hot_num='" + hot_num + '\'' +
+                ", uid='" + uid + '\'' +
+                ", status=" + status +
+                ", types=" + types +
+                ", authors=" + authors +
+                ", subscribe_num=" + subscribe_num +
+                ", chapters=" + chapters +
+                ", comic_notice='" + comic_notice + '\'' +
+                ", comment=" + comment +
+                '}';
+    }
 }

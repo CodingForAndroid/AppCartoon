@@ -16,15 +16,15 @@ import com.jorge.appcartoon.util.LogUtils;
 public class ChapterDetailProtocol  extends BaseProtocol<ChapterDetail>{
     boolean waitflag=true;
     String  result ="";
-    private String  url="";
+    private String  mUrl="";
     public ChapterDetailProtocol(String url){
         LogUtils.e(url);
-        this.url=url;
+        this.mUrl=url;
     }
 
     @Override
     protected String loadFromNet(int index) {
-        StringRequest chapterDetailRequest=new StringRequest(url, new Response.SuccessListener<String>() {
+        StringRequest chapterDetailRequest=new StringRequest(mUrl, new Response.SuccessListener<String>() {
             @Override
             public void onResponse(String s) {
                 result =s;
@@ -46,13 +46,17 @@ public class ChapterDetailProtocol  extends BaseProtocol<ChapterDetail>{
 
     @Override
     protected String getKey() {
-        return "ChapterDetailProtocol";
+        return mUrl;
     }
 
     @Override
     protected ChapterDetail parseData(String json) {
         Gson gson = new Gson();
         return   gson.fromJson(json,ChapterDetail.class);
+    }
+
+    public  void setUrl(String url){
+        mUrl=url;
     }
 
 }

@@ -43,6 +43,8 @@ public class SwipeBackActivityHelper {
         });
     }
 
+
+
     public void onPostCreate() {
         mSwipeBackLayout.attachToActivity(mActivity);
     }

@@ -1,6 +1,9 @@
 package com.jorge.appcartoon.bean;
 
-public class Chapter {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Chapter implements Parcelable {
     //        chapter_id	:	44785
 //        chapter_title	:	3.5话
 //        updatetime	:	1446774393
@@ -14,6 +17,40 @@ public class Chapter {
     public int updatetime;
     //97650
     public int filesize;
+
+
+    protected Chapter(Parcel in) {
+        chapter_id = in.readInt();
+        chapter_title = in.readString();
+        updatetime = in.readInt();
+        filesize = in.readInt();
+    }
+
+    public static final Creator<Chapter> CREATOR = new Creator<Chapter>() {
+        @Override
+        public Chapter createFromParcel(Parcel in) {
+            return new Chapter(in);
+        }
+
+        @Override
+        public Chapter[] newArray(int size) {
+            return new Chapter[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(chapter_id);
+        dest.writeString(chapter_title);
+        dest.writeInt(updatetime);
+        dest.writeInt(filesize);
+    }
+
 
     @Override
     public String toString() {

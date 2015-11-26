@@ -2,10 +2,14 @@ package com.jorge.appcartoon;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.WindowManager;
 
+import com.jorge.appcartoon.util.LogUtils;
 import com.jorge.appcartoon.widget.swipe.SwipeBackActivity;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +21,36 @@ public  abstract class BaseActivity extends SwipeBackActivity {
     private static BaseActivity mForegroundActivity = null;
     /** 记录所有活动的Activity */
     private static final List<BaseActivity> mActivities = new LinkedList<BaseActivity>();
+
+    protected Handler handler = new MyHandler(this);
+//	private static TextView mAccountId;
+
+    private static class MyHandler extends Handler {
+        private final WeakReference<BaseActivity> mWeakAct;
+
+        public MyHandler(BaseActivity activity) {
+            mWeakAct = new WeakReference<BaseActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            BaseActivity activity = mWeakAct.get();
+            if (activity == null) {
+                return;
+            }
+            activity.handleMsg(msg);
+        }
+    }
+
+    /**
+     * 消息处理
+     *
+     * @param msg
+     */
+    protected void handleMsg(Message msg) {
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +59,6 @@ public  abstract class BaseActivity extends SwipeBackActivity {
         initView();
         overrideSlideEnterTransition();
         addListener();
-
-
-
     }
 
     @Override

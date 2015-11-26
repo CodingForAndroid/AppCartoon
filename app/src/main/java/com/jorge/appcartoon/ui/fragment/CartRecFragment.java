@@ -54,7 +54,7 @@ public class CartRecFragment extends BaseFragment {
     @Override
     protected LoadingPage.LoadResult load() {
         CartRecProtocol demoProtocol = new CartRecProtocol();
-        list = demoProtocol.load(0,false);
+        list = demoProtocol.load(0,0);
         return check(list);
     }
 

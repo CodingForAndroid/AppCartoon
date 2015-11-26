@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_recyle"
     android:layout_width="match_parent" android:layout_height="wrap_content" >
 
     <TextView
-        android:textSize="@dimen/txt_size_classify_mid"
-        android:textColor="@color/grey600"
+        android:textSize="@dimen/txt_size_classify_low"
+        android:textColor="@color/black"
         android:layout_margin="5dp"
         android:id="@+id/tv_1"
-        android:background="@drawable/shape_ins_rectangle_solid_white_stroke_black"
+        android:background="@drawable/shape_recycle_item"
         android:gravity="center"
-        android:height="40dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:maxLength="@integer/default_txt_count"
         android:text="第一话"
-        android:textStyle="bold"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="30dp" />
 </LinearLayout>

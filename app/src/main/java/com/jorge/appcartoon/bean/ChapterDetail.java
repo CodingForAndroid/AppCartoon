@@ -55,4 +55,36 @@ public class ChapterDetail {
     //网址Url链接
     public List<String> page_url;
 
+
+    @Override
+    public String toString() {
+        return "ChapterDetail{" +
+                "chapter_id=" + chapter_id +
+                ", comic_id=" + comic_id +
+                ", title='" + title + '\'' +
+                ", chapter_order=" + chapter_order +
+                ", direction=" + direction +
+                ", picnum=" + picnum +
+                ", comment_count=" + comment_count +
+                ", page_url=" + page_url.size() +
+                '}';
+    }
+
+
+//    private int chapter_id;
+//
+//    private int comic_id;
+//
+//    private String title;
+//
+//    private int chapter_order;
+//
+//    private int direction;
+//
+//    private ArrayList<String> page_url ;
+//
+//    private int picnum;
+//
+//    private int comment_count;
+
 }

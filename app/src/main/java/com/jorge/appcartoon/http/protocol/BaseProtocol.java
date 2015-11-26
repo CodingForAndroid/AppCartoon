@@ -6,7 +6,9 @@ import android.os.SystemClock;
 import com.jorge.appcartoon.util.FileUtils;
 import com.jorge.appcartoon.util.IOUtils;
 import com.jorge.appcartoon.util.LogUtils;
+import com.jorge.appcartoon.util.NetWorkUtil;
 import com.jorge.appcartoon.util.StringUtils;
+import com.jorge.appcartoon.util.UIUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,13 +20,38 @@ import java.io.FileWriter;
  */
 public abstract class BaseProtocol<Data> {
 
+    /**取本地优先*/
+    private int fetchLocal=0;
+    /**只取网络*/
+    private int fetchNew=1;
+    /**当有网络的时候，优先取网络*/
+    private int fetchByNetState=1;
     /**
      *  加载协议
-     * @param index :0
+     * @param index: 缓存数据前缀
+     * @param fetchNewData：是否要取最新数据 0：不要 1： 取最新数据
      * @return
      */
-    public Data load(int index) {
-        return load(index, true);
+    public Data load(int index,int fetchNewData) {
+        /**判断判断  当前网络状态*/
+        String netState= NetWorkUtil.checkNetworkType(UIUtils.getContext());
+        if(!StringUtils.isEmpty(netState)){
+            /**当前网络状态不为空*/
+            if(fetchNew==fetchNewData){
+                /**同步服务器上的数据*/
+                return load(index, false);
+            }else if(fetchLocal==fetchNewData){
+                /**取本地优先*/
+                return load(index, true);
+            }else { /**有网络的时候先去取*/
+
+            }
+            return load(index, false);
+        }else{
+            /**当前网络状态为空*/
+            return load(index, true);
+        }
+
     }
     /**
      * 加载协议 首先  Boolean localFetchFirst ： 取本地缓存  默认为true
@@ -35,30 +62,28 @@ public abstract class BaseProtocol<Data> {
     public Data load(int index,boolean localFetchFirst) {
 
         if(mListener!=null) mListener.onLoading();
-        SystemClock.sleep(1000);// 休息1秒，防止加载过快，看不到界面变化效果
+        /**休息1秒，防止加载过快，看不到界面变化效果*/
+//        SystemClock.sleep(1000);
         String json = null;
-        // 1.从本地缓存读取数据，查看缓存时间
+        /**1.从本地缓存读取数据，查看缓存时间*/
 
         if(localFetchFirst){
           json = loadFromLocal(index);
         }
-        // 2.如果缓存时间过期，从网络加载
+        /**2.如果缓存时间过期，从网络加载*/
         if (StringUtils.isEmpty(json)) {
             json = loadFromNet(index);
             if (json == null) {
-                // 网络出错
+                /**网络出错*/
                 return null;
             } else {
-                // 3.把数据保存到本地保存到本地
+                /** 3.把数据保存到本地保存到本地*/
                 saveToLocal(json, index);
             }
         }
-
-
-
-
         LogUtils.e(json);
-        SystemClock.sleep(3000);// 休息1秒，防止加载过快，看不到界面变化效果
+        /**休息1秒，防止加载过快，看不到界面变化效果*/
+//        SystemClock.sleep(3000);
         return  parseFromJson(json);
 
     }
@@ -69,9 +94,9 @@ public abstract class BaseProtocol<Data> {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(path + getKey() + "_" + index));
-            String line = reader.readLine();// 第一行是时间
+            String line = reader.readLine();/** 第一行是时间*/
             Long time = Long.valueOf(line);
-            if (time > System.currentTimeMillis()) {//如果时间未过期
+            if (time > System.currentTimeMillis()) {/**如果时间未过期*/
                 StringBuilder sb = new StringBuilder();
                 String result;
                 while ((result = reader.readLine()) != null) {
@@ -118,7 +143,16 @@ public abstract class BaseProtocol<Data> {
     /** 从json中解析 */
     protected  Data parseFromJson(String json){
         Data data=  parseData(json);
-        if(mListener!=null) mListener.hasFinishLoading();
+        if(mListener!=null){
+           new Thread(){
+               @Override
+               public void run() {
+                   SystemClock.sleep(400);
+                   mListener.hasFinishLoading();
+               }
+           }.start();
+
+        }
         return  data;
     };
 
@@ -138,13 +172,13 @@ public abstract class BaseProtocol<Data> {
     }
 
 
-    // 请求网络。跟 解析完成的监听器
+    /** 请求网络，解析完成的监听器*/
     private CompleteListener mListener;
     public void setOnCompleteListener(CompleteListener listener){
         mListener=listener;
     }
     public interface  CompleteListener{
-        void hasFinishLoading();
+        void hasFinishLoading( );
         void onLoading();
     }
 }

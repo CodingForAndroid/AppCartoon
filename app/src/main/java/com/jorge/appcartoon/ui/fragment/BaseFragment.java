@@ -25,8 +25,9 @@ public abstract class BaseFragment extends Fragment {
 
     protected LoadingPage mContentView;
 
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
@@ -63,6 +64,8 @@ public abstract class BaseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         show();
     }
+
+
 
     /** 当显示的时候，加载该页面 */
     public void show() {

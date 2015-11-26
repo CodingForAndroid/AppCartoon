@@ -61,7 +61,7 @@ public class ChapterRecycleAdapter extends RecyclerView.Adapter<ChapterRecycleAd
     @Override
     public void onBindViewHolder(ChapterRecycleAdapter.ChapterHolder holder, int position) {
         if(position==count){
-            holder.tv1.setText("+++");
+            holder.tv1.setText("收起");
             holder.itemView.setTag(position);
             return;
         }
@@ -72,7 +72,7 @@ public class ChapterRecycleAdapter extends RecyclerView.Adapter<ChapterRecycleAd
         if (!showType) {
             if (count >= 12) {
                 if (position == 11) {
-                    holder.tv1.setText("...");
+                    holder.tv1.setText("展开");
                     holder.itemView.setTag(position);
                 }
             }

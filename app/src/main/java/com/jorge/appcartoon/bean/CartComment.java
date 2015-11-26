@@ -1,29 +1,52 @@
 package com.jorge.appcartoon.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
  * 作品评论
  */
-public class CartComment {
+public class CartComment implements Parcelable{
     //30
     public int comment_count;
     // 最近评论 2；
     public List<CommentInfo> latest_comment;
 
-    public class CommentInfo {
-        //388061
-        public int comment_id;
-        //2947149
-        public int uid;
-        //朝倉涼子
-        public String nickname;
-        //http://images.dmzj.com/user/58/33/58333e3d0ebb4219033f5aafa3620584.png
-        public String avatar;
-        // /c摆动
-        public String content;
-        //1446782285
-        public int createtime;
+    protected CartComment(Parcel in) {
+        comment_count = in.readInt();
+        latest_comment = in.createTypedArrayList(CommentInfo.CREATOR);
+    }
 
+    public static final Creator<CartComment> CREATOR = new Creator<CartComment>() {
+        @Override
+        public CartComment createFromParcel(Parcel in) {
+            return new CartComment(in);
+        }
+
+        @Override
+        public CartComment[] newArray(int size) {
+            return new CartComment[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(comment_count);
+        dest.writeList(latest_comment);
+    }
+
+    @Override
+    public String toString() {
+        return "CartComment{" +
+                "comment_count=" + comment_count +
+                ", latest_comment=" + latest_comment +
+                '}';
     }
 }
