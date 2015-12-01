@@ -1,10 +1,13 @@
 package com.jorge.appcartoon;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Looper;
 import com.jorge.appcartoon.http.HttpUtil;
 import com.jorge.appcartoon.util.FileUtils;
+import com.jorge.dao.DaoMaster;
+import com.jorge.dao.DaoSession;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
@@ -28,7 +31,8 @@ public class CartoonApplication extends Application {
     private static Handler mMainThreadHandler;
     /** 主线程Looper */
     private static Looper mMainLooper;
-
+    /**greenDao*/
+    public DaoSession daoSession;
     @Override
     public void onCreate() {
         mMainThreadId = android.os.Process.myTid();
@@ -39,7 +43,7 @@ public class CartoonApplication extends Application {
         super.onCreate();
         HttpUtil.init(this);
         initImageLoader();
-
+        setupDatabase();
     }
 
 
@@ -66,6 +70,21 @@ public class CartoonApplication extends Application {
     public static Looper getMainThreadLooper() {
         return mMainLooper;
     }
+
+
+
+
+    private void setupDatabase() {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "example-db", null);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+    }
+
+    public DaoSession getDaoSession() {
+        return daoSession;
+    }
+
 
 
     public void initImageLoader(){

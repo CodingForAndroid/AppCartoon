@@ -1,6 +1,8 @@
 package com.jorge.appcartoon.util;
 
 import android.os.Environment;
+import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -374,4 +376,32 @@ public class FileUtils {
 		}
 		return true;
 	}
+
+
+	public static boolean isExistsFile(String filepath) {
+		try {
+			if (TextUtils.isEmpty(filepath)) {
+				return false;
+			}
+			File file = new File(filepath);
+			return file.exists();
+		} catch (Exception e) {
+			// e.printStackTrace();
+//			Log.d(TAG, "the file is not exists file path is: " + filepath);
+			return false;
+		}
+	}
+
+	public static int getFileSize(String filepath) {
+		try {
+			if (TextUtils.isEmpty(filepath)) {
+				return -1;
+			}
+			File file = new File(filepath);
+			return (int) file.length();
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+
 }

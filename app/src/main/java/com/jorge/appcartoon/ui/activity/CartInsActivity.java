@@ -1,13 +1,13 @@
 package com.jorge.appcartoon.ui.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -16,7 +16,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.jorge.appcartoon.BaseActivity;
 import com.jorge.appcartoon.R;
-import com.jorge.appcartoon.ThreadManager;
+import com.jorge.appcartoon.manager.ThreadManager;
 import com.jorge.appcartoon.adapter.ChapterRecycleAdapter;
 import com.jorge.appcartoon.bean.CartComment;
 import com.jorge.appcartoon.bean.CartInstruction;
@@ -24,12 +24,15 @@ import com.jorge.appcartoon.bean.Chapter;
 import com.jorge.appcartoon.bean.CommentInfo;
 import com.jorge.appcartoon.http.ApiUtil;
 import com.jorge.appcartoon.http.protocol.CartInsProtocol;
+import com.jorge.appcartoon.service.ComicDaoImpl;
 import com.jorge.appcartoon.util.DateFormatUtil;
 import com.jorge.appcartoon.util.ImageLoaderHelper;
 import com.jorge.appcartoon.util.UIUtils;
 import com.jorge.appcartoon.util.ViewUtils;
 import com.jorge.appcartoon.widget.MeasureGridLayoutManager;
 import com.jorge.appcartoon.widget.RippleLayout;
+import com.jorge.dao.Comic;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.Bind;
@@ -119,6 +122,8 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
     TextView tvMoreDiscuss;
     @Bind(R.id.recycle)
     RecyclerView recycle;
+    @Bind(R.id.btn_continue)
+    Button btnContinue;
 
     /**获取到的作品信息*/
     private CartInstruction cartInstruction ;
@@ -136,6 +141,12 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
     private final String CHAPTER_POSITION="chapter_position";
     /**章节集合*/
     ArrayList<Integer> chapter_ids=new ArrayList<Integer>();
+    /**传递的List<chapter>集合*/
+    private final String  INTENT_EXTRA_PARCELABLE_CARTCHAPTER="intent_extra_parcelable_cartchapter";
+    /**动画的comic_id*/
+    private final String  INTENT_EXTRA_COMIC_ID="intent_extra_comic_id";
+    /**首字母*/
+    private final String  INTENT_EXTRA_FIRST_LETTER="intent_extra_first_letter";
     @Override
     public void onRefresh() {
         ViewUtils.showView(loadingView);
@@ -277,7 +288,7 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
         }else if(list.size()==1){
             ViewUtils.showView(rl_parent_1);
             ViewUtils.hideView(rl_parent_2);
-            CommentInfo commentInfo1 = comment.latest_comment.get(1);
+            CommentInfo commentInfo1 = comment.latest_comment.get(0);
             ImageLoaderHelper.getInstance().loadImage(commentInfo1.avatar.split("\\?")[0], profileImage_1);
             /**昵称*/
             tvNick_1.setText(commentInfo1.nickname);
@@ -315,13 +326,15 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
                     Intent intent=new Intent(CartInsActivity.this,EnjoyActivity.class);
                     intent.putIntegerArrayListExtra(INTENT_EXTRA_CHAPTER_IDS, chapter_ids);
                     intent.putExtra(CHAPTER_POSITION, position);
-                    intent.putExtra(ApiUtil.REPLACE_COMIC_ID,""+cartInstruction.id);
+                    intent.putExtra(ApiUtil.REPLACE_COMIC_ID, "" + cartInstruction.id);
                     intent.putExtra(ApiUtil.REPLACE_CHAPTER_ID, "" + chapter.chapter_id);
+                    ComicDaoImpl.getInstance().insert(cartInstruction.id,chapter.chapter_id);
                     UIUtils.startActivity(intent);
                 }
             }
         });
     }
+
 
     //章节 adapter
     private ChapterRecycleAdapter mChapterAdapter;
@@ -383,13 +396,44 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
             }
         });
         swipe.setOnRefreshListener(this);
-    }
 
+        /**继续阅读*/
+        btnContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(CartInsActivity.this,EnjoyActivity.class);
+                /** 查询数据库中的漫画信息*/
+                Comic comic=   ComicDaoImpl.getInstance().query(cartInstruction.id);
+                if(comic==null){/**数据库中没有记录，则从第一章开始看*/
+                    List<Chapter> list=cartInstruction.chapters.get(0).data;
+                    intent.putExtra(ApiUtil.REPLACE_CHAPTER_ID, "" + list.get(list.size()-1).chapter_id);
+                }else{
+                    /**数据库中没有记录，则从记录章节往下看*/
+                    int chapter_id=  comic.getChapter_id();
+                    intent.putExtra(ApiUtil.REPLACE_CHAPTER_ID, "" + chapter_id);
+                }
+                intent.putIntegerArrayListExtra(INTENT_EXTRA_CHAPTER_IDS, chapter_ids);
+                intent.putExtra(ApiUtil.REPLACE_COMIC_ID, "" + cartInstruction.id);
+                UIUtils.startActivity(intent);
+
+            }
+        });
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.action_down:
+                Intent intent=new Intent(CartInsActivity.this,DownListActivity.class);
+                intent.putExtra(INTENT_EXTRA_PARCELABLE_CARTCHAPTER, cartInstruction.chapters.get(0));
+                intent.putExtra(INTENT_EXTRA_COMIC_ID, cartInstruction.id);
+                intent.putExtra(INTENT_EXTRA_FIRST_LETTER, cartInstruction.first_letter);
+                UIUtils.startActivity(intent);
+                break;
+        }
+
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -398,5 +442,9 @@ public class CartInsActivity extends BaseActivity implements SwipeRefreshLayout.
     }
 
 
+    @Override
+    public void finish() {
+        super.finish();
+    }
 }
 

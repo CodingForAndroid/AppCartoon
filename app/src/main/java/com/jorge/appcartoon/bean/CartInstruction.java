@@ -14,7 +14,7 @@ public class CartInstruction implements Parcelable {
 //    {
 //        "id": 20706,
 //            "islong": 2,
-//            "title": "嘿嘿，黑研社",
+//            "title": "嘿嘿，黑研社",aa
 //            "is_dmzj": 1,
 //            "cover": "http://images.dmzj.com/img/webpic/12/1000911121444716924.jpg",
 //            "description": "冥府衰败，阎魔从沉眠中醒来之时，整个冥界只剩下他一人。身为天地正神，阎魔必须修正天道，唯一的办法，只有孤身上路前往人间，把生死簿上阳寿已尽却不死之人一个个“消除掉”，而现在的人界，凡人皆为永生，这一切的背后，似乎埋藏着一个巨大的阴谋……",

@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Chapter implements Parcelable {
-    //        chapter_id	:	44785
+//        chapter_id	:	44785
 //        chapter_title	:	3.5话
 //        updatetime	:	1446774393
 //        filesize	:	97650
@@ -18,7 +18,14 @@ public class Chapter implements Parcelable {
     //97650
     public int filesize;
 
+    public String download_url;
 
+    public String getDownloadUrl(){
+        return download_url;
+    }
+    public void setDownload_url(String downloadUrl){
+        this.download_url=downloadUrl;
+    }
     protected Chapter(Parcel in) {
         chapter_id = in.readInt();
         chapter_title = in.readString();

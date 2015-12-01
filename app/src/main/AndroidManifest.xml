@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jorge.appcartoon" >
+    package="com.jorge.appcartoon">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,15 +20,16 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
-    <!--        android:supportsRtl="true"      android:allowBackup="true" -->
+    <!-- android:supportsRtl="true"      android:allowBackup="true" -->
     <application
         android:name=".CartoonApplication"
         android:icon="@mipmap/shortcut"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -41,8 +42,18 @@
         <activity
             android:name=".ui.activity.SwipeFinishActivity"
             android:theme="@style/swipeTheme" />
-        <activity android:name=".ui.activity.EnjoyActivity" >
+        <activity android:name=".ui.activity.EnjoyActivity" />
+        <!--
+            <activity android:name=".ui.activity.NodeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        -->
+        <activity android:name=".ui.activity.DownListActivity" />
+        <activity android:name=".ui.activity.DownLoadManageActivity"></activity>
     </application>
 
 </manifest>

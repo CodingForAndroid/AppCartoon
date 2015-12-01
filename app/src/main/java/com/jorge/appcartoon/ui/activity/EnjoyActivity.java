@@ -1,12 +1,8 @@
 package com.jorge.appcartoon.ui.activity;
 
-import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -14,18 +10,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.jorge.appcartoon.BaseActivity;
 import com.jorge.appcartoon.R;
-import com.jorge.appcartoon.ThreadManager;
+import com.jorge.appcartoon.manager.ThreadManager;
 import com.jorge.appcartoon.adapter.ChapterUrlAdapter;
 import com.jorge.appcartoon.bean.ChapterDetail;
 import com.jorge.appcartoon.http.ApiUtil;
 import com.jorge.appcartoon.http.protocol.BaseProtocol;
-import com.jorge.appcartoon.http.protocol.CartInsProtocol;
 import com.jorge.appcartoon.http.protocol.ChapterDetailProtocol;
 import com.jorge.appcartoon.util.LogUtils;
 import com.jorge.appcartoon.util.NetWorkUtil;
 import com.jorge.appcartoon.util.TimeUtils;
 import com.jorge.appcartoon.util.UIUtils;
 import com.jorge.appcartoon.util.ViewUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.Bind;
@@ -89,6 +85,7 @@ public class EnjoyActivity extends BaseActivity {
     /**正在加载的标志，正在加载时，则不要重复加载数据*/
     private boolean isLoading=false;
 
+    private int lastPosition;
     @Override
     protected void handleMsg(Message msg) {
         if (!Thread.currentThread().isInterrupted()) {
@@ -110,10 +107,7 @@ public class EnjoyActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+
 
     @Override
     public void init() {
@@ -143,8 +137,6 @@ public class EnjoyActivity extends BaseActivity {
                 UIUtils.post(new Runnable() {
                     @Override
                     public void run() {
-                        LogUtils.e("148");
-                        LogUtils.e(chapterDetail.toString());
                         setData(chapterDetail, POSITION_TYPE.NO);
                         ViewUtils.hideView(loadingView);
                         ViewUtils.hideView(progressbar);
@@ -176,7 +168,7 @@ public class EnjoyActivity extends BaseActivity {
 
     }
 
-    private int lastPosition;
+
     @Override
     public void addListener() {
         //标题左上角的后退键
@@ -191,25 +183,65 @@ public class EnjoyActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (theLast) {
-                    if(orentation_flag){
-                        position= position -lastPosition;
-                        tvProgress.setText(String.valueOf((position + 1) + "/" + chapterDetail.picnum));
+//                if (theLast) {
+//                    if(orentation_flag){
+//                        position= position -lastPosition;
+//                        tvProgress.setText(String.valueOf((position + 1) + "/" + chapterDetail.picnum));
+//                    }else{
+//                        position= position -lastPosition;
+//                        tvProgress.setText(String.valueOf((position -1) + "/" + chapterDetail.picnum));
+//                    }
+//
+//                }else{
+//
+//                    if(orentation_flag){
+//                        tvProgress.setText(String.valueOf((position + 1) + "/" + chapterDetail.picnum));
+//                    }else{
+//                        tvProgress.setText(String.valueOf((position - 1) + "/" + chapterDetail.picnum));
+//                    }
+//
+//                }
+
+                if (orentation_flag) {
+                    LogUtils.e("214"+"       position:    "+position+"     chapterDetail.picnum： "+chapterDetail.picnum +"      lastPosition:"+lastPosition);
+                    /**往左滑动*/
+//                    if (theLast) { /**滑动到最后一页*/
+//                        LogUtils.e("216");
+//                        tvProgress.setText(String.valueOf((Math.abs(position - lastPosition) ) + "/" + chapterDetail.picnum));
+//                    } else {
+//                        LogUtils.e("219");
+//                        tvProgress.setText(String.valueOf(Math.abs(position - lastPosition) + "/" + chapterDetail.picnum));
+//                    }
+                    if(position<=chapterDetail.picnum){
+                        tvProgress.setText(String.valueOf(Math.abs(position +1) + "/" + chapterDetail.picnum));
                     }else{
-                        position= position -lastPosition;
-                        tvProgress.setText(String.valueOf((position -1) + "/" + chapterDetail.picnum));
+                        if(position>lastPosition){
+
+                        }else{
+
+                        }
+                        tvProgress.setText(String.valueOf(Math.abs(position +1-lastPosition) + "/" + chapterDetail.picnum));
                     }
 
-                }else{
-
-                    if(orentation_flag){
-                        tvProgress.setText(String.valueOf((position + 1) + "/" + chapterDetail.picnum));
+                } else {
+                    /**往右滑动*/
+//                    if (theLast) { /**滑动到最后一页*/
+                    LogUtils.e("216"+"       position:    "+position+"     chapterDetail.picnum： "+chapterDetail.picnum  +"  lastPosition："+lastPosition);
+                    if(position<chapterDetail.picnum){
+                        tvProgress.setText((position +1) + "/" + chapterDetail.picnum);
                     }else{
-                        tvProgress.setText(String.valueOf((position - 1) + "/" + chapterDetail.picnum));
+                        if(lastPosition>position){
+                            tvProgress.setText((chapterDetail.picnum-  i++)+"/" + chapterDetail.picnum);
+                            tvProgress.setText(String.valueOf((chapterDetail.picnum + position - lastPosition + 1) + "/" + chapterDetail.picnum));
+                        }else{
+                            tvProgress.setText(String.valueOf((position - lastPosition + 1) + "/" + chapterDetail.picnum));
+                        }
+
                     }
+
                 }
-        }
-
+            }
+            int i=0;
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -243,18 +275,18 @@ public class EnjoyActivity extends BaseActivity {
      *加载前一话
      */
     private void loadPre() {
-        orentation_flag=true;
+
+
         if(mViewPager.getCurrentItem()==0&&!theLast){
-
-            lastPosition=    mViewPager.getAdapter()
-                    .getCount();
-
+            orentation_flag=true;
+            lastPosition=    mViewPager.getAdapter().getCount();
             Toast.makeText(EnjoyActivity.this, "已经是第一页",
                     Toast.LENGTH_LONG).show();
-
+            if(isLoading) return;
             for (int i = 0; i < chapter_ids.size(); i++) {
                 String current_chapter_id = chapter_ids.get(i).toString();
                 if (chapter_id.equals(current_chapter_id) && i+1 <chapter_ids.size()) {
+                    isLoading=true;
                     chapter_id = String.valueOf(chapter_ids.get(i + 1));
                     String chapter_url = ApiUtil.BASE_URL + "chapter/" + comic_id + "/" + chapter_id + ".json";
                     final ChapterDetailProtocol newProtocol = new ChapterDetailProtocol(chapter_url);
@@ -269,6 +301,7 @@ public class EnjoyActivity extends BaseActivity {
                     newProtocol.setOnCompleteListener(new BaseProtocol.CompleteListener() {
                         @Override
                         public void hasFinishLoading() {
+                                    isLoading=false;
                             UIUtils.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -302,18 +335,20 @@ public class EnjoyActivity extends BaseActivity {
      * 加载下一话
      */
     private void loadNext() {
-        orentation_flag=false;
+
+
         if (mViewPager.getCurrentItem() == mViewPager.getAdapter()
                 .getCount() - 1 && !theLast) {
-            lastPosition=    mViewPager.getAdapter()
-                    .getCount();
+            orentation_flag=false;
+            lastPosition=    mViewPager.getAdapter().getCount();
             Toast.makeText(EnjoyActivity.this, "已经是最后一页",
                     Toast.LENGTH_LONG).show();
-
+            if(isLoading) return;
             for (int i = 0; i < chapter_ids.size(); i++) {
                 String current_chapter_id = chapter_ids.get(i).toString();
                 // 找到当前 chapter_id 的位置
                 if (chapter_id.equals(current_chapter_id) && i > 0) {
+                    isLoading=true;
                     chapter_id = String.valueOf(chapter_ids.get(i - 1));
                     String chapter_url = ApiUtil.BASE_URL + "chapter/" + comic_id + "/" + chapter_id + ".json";
                         final ChapterDetailProtocol newProtocol = new ChapterDetailProtocol(chapter_url);
@@ -331,6 +366,7 @@ public class EnjoyActivity extends BaseActivity {
                     newProtocol.setOnCompleteListener(new BaseProtocol.CompleteListener() {
                         @Override
                         public void hasFinishLoading() {
+                            isLoading=false;
                             UIUtils.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -344,6 +380,7 @@ public class EnjoyActivity extends BaseActivity {
 
                         @Override
                         public void onLoading() {
+
                             UIUtils.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -372,7 +409,6 @@ public class EnjoyActivity extends BaseActivity {
     public void setData(ChapterDetail chapterDetail ,POSITION_TYPE type) {
         // 拿到当前章节的小说
         if(null==chapterUrlAdapter){
-            LogUtils.e("page_urls==null?:    "+(null==page_urls)+"          ( chapterDetail.page_url)==null: "+(null==chapterDetail.page_url));
             page_urls.addAll(chapterDetail.page_url);
             chapterUrlAdapter = new ChapterUrlAdapter(page_urls, handler);
             mViewPager.setAdapter(chapterUrlAdapter);
@@ -383,7 +419,8 @@ public class EnjoyActivity extends BaseActivity {
                 break;
             case PRE:
                 chapterUrlAdapter.updateList(chapterDetail.page_url, 1);
-                mViewPager.setCurrentItem(chapterDetail.page_url.size()-1);
+                mViewPager.setCurrentItem(chapterDetail.page_url.size() - 1);
+                tvProgress.setText(chapterDetail.picnum+ "/" + chapterDetail.picnum);
                 break;
             case NEXT:
                 chapterUrlAdapter.updateList(chapterDetail.page_url,0);
@@ -398,17 +435,22 @@ public class EnjoyActivity extends BaseActivity {
         tvNetState.setText(NetWorkUtil.checkNetworkType(UIUtils.getContext()));
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void finish() {
+        super.finish();
     }
-
 
     enum POSITION_TYPE{
         /**不区分*/

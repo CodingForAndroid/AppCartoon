@@ -1,5 +1,5 @@
 
-package com.jorge.appcartoon;
+package com.jorge.appcartoon.manager;
 
 import java.util.HashMap;
 import java.util.Map;

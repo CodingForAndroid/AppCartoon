@@ -35,6 +35,7 @@ public abstract class BaseProtocol<Data> {
     public Data load(int index,int fetchNewData) {
         /**判断判断  当前网络状态*/
         String netState= NetWorkUtil.checkNetworkType(UIUtils.getContext());
+        UIUtils.showToastSafe("netState:"+netState);
         if(!StringUtils.isEmpty(netState)){
             /**当前网络状态不为空*/
             if(fetchNew==fetchNewData){
@@ -126,7 +127,7 @@ public abstract class BaseProtocol<Data> {
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(path + getKey() + "_" + index ));
-            long time = System.currentTimeMillis() + 1000 * 60;//先计算出过期时间，写入第一行  1minute 过期时间
+            long time = System.currentTimeMillis() + 1000 * 60*60*24;//先计算出过期时间，写入第一行  1minute 过期时间
             writer.write(time + "\r\n");
             writer.write(str.toCharArray());
             writer.flush();

@@ -15,12 +15,12 @@
     <dimen name="button_margin">20dp</dimen>
 
 
-    <integer  name="grid_nums">2</integer >
-    <integer  name="txt_desc_max_length">40</integer >
-    <integer  name="borderWidth">30</integer >
-    <integer  name="chapter_items">4</integer >
-    <integer  name="default_chapters_show">12</integer >
-    <integer  name="default_txt_count">6</integer >
+    <integer name="grid_nums">2</integer>
+    <integer name="txt_desc_max_length">40</integer>
+    <integer name="borderWidth">30</integer>
+    <integer name="chapter_items">4</integer>
+    <integer name="default_chapters_show">12</integer>
+    <integer name="default_txt_count">6</integer>
 
     <dimen name="txt_size_classify_high">18sp</dimen>
     <dimen name="txt_size_classify_mid">15sp</dimen>

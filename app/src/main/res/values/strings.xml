@@ -28,4 +28,8 @@
     <string name="txt_new_discuss">发表新帖</string>
     <string name="txt_whole">&#160;&#160;查看全文</string>
     <string name="txt_more_discuss">更多评论(%s)</string>
+    <string name="txt_chapter_count">%s个章节</string>
+    <string name="txt_choose_chapter">选择章节</string>
+    <string name="txt_downloading">正在下载</string>
+    <string name="txt_has_downloaded">下载完成</string>
 </resources>

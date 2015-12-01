@@ -3,6 +3,7 @@ package com.jorge.appcartoon.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
     /**
@@ -13,7 +14,7 @@ import java.util.List;
     /**连载*/
     public String title;
     /**2Chapters*/
-    public List<Chapter> data;
+    public ArrayList<Chapter> data;
 
 
         protected CartChapter(Parcel in) {

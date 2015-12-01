@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.jorge.appcartoon.R;
-import com.jorge.appcartoon.ThreadManager;
+import com.jorge.appcartoon.manager.ThreadManager;
 import com.jorge.appcartoon.util.UIUtils;
 /**
  * 加载页

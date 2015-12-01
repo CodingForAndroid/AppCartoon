@@ -25,4 +25,5 @@
     <color name="half_transparent">#40ffffff</color>
     <color name="second_progress_color">#0683A3</color>
     <color name="reveal_color">#3b4169E1</color>
+    <color name="blue_middle">#0090ff</color>
 </resources>

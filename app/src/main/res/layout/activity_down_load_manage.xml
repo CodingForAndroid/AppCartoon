@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+<RelativeLayout
+    android:layout_marginBottom="@dimen/activity_horizontal_padding"
+    android:id="@+id/ll_title_layout"
+    android:layout_centerHorizontal="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_alignParentLeft="true"
+        android:background="@mipmap/icon_ins_left_arrow_2x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_downloading"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_rectangle_solid_blue_left_radius"
+            android:text="@string/txt_downloading"
+            android:singleLine="true"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+        <Button
+            android:layout_toRightOf="@+id/btn_downloading"
+            android:id="@+id/btn_finish"
+            android:background="@drawable/shape_rectangle_stroke_blue_middle_right_radius"
+            android:textColor="@color/blue_middle"
+            android:text="@string/txt_has_downloaded"
+            android:singleLine="true"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+    </RelativeLayout>
+
+</RelativeLayout>
+
+    <ListView
+        android:layout_below="@+id/ll_title_layout"
+        android:id="@+id/listView_finish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+    <ListView
+        android:layout_below="@+id/ll_title_layout"
+        android:id="@+id/listView_downloading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+</RelativeLayout>

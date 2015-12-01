@@ -72,7 +72,7 @@ public abstract class DefaultAdapter<Data> extends BaseAdapter implements Recycl
 	@Override
 	public int getCount() {
 		if (mDatas != null) {
-			return mDatas.size() + 1;// 加1是为了最后加载更多的布局
+			return mDatas.size() ;// 加1是为了最后加载更多的布局
 		}
 		return 0;
 	}
@@ -96,12 +96,12 @@ public abstract class DefaultAdapter<Data> extends BaseAdapter implements Recycl
 
 	@Override
 	public int getViewTypeCount() {
-		return super.getViewTypeCount() + 1;// 加1是为了最后加载更多的布局
+		return super.getViewTypeCount() ;// 加1是为了最后加载更多的布局
 	}
 
 	@Override
 	public int getItemViewType(int position) {
-		if (position == getCount() - 1) {
+		if (position == getCount()) {
 			return MORE_VIEW_TYPE;// 加载更多的布局
 		} else {
 			return getItemViewTypeInner(position);
@@ -115,50 +115,13 @@ public abstract class DefaultAdapter<Data> extends BaseAdapter implements Recycl
 	@Override
 	public View getView(int position, View convertView1, ViewGroup parent) {
 		BaseHolder<Data> holder;
-//		if (convertView != null && convertView.getTag() instanceof BaseHolder) {
-//			holder = (BaseHolder<Data>) convertView.getTag();
-//		} else {
-			if (getItemViewType(position) == MORE_VIEW_TYPE) {
-				holder = getMoreHolder();
-			} else {
-				holder = getHolder();
-				holder.setData(mDatas.get(position));
-			}
-//		}
+		holder = getHolder();
+		holder.setData(mDatas.get(position));
 		mDisplayedHolders.add(holder);
 		return holder.getRootView();
 	}
 
 	protected abstract BaseHolder getHolder();
-
-	public BaseHolder getMoreHolder() {
-		return new MoreHolder(this, hasMore());
-	}
-
-	public int loadMore() {
-		List<Data> datas = onLoadMore();
-		if (datas == null) {
-			return MoreHolder.ERROR;
-		}
-		if (getData() != null) {
-			getData().addAll(datas);
-		} else {
-			setData(datas);
-		}
-		if (datas.size() < 20) {
-			return MoreHolder.NO_MORE;
-		} else {
-			return MoreHolder.HAS_MORE;
-		}
-	}
-
-	public List<Data> onLoadMore() {
-		return null;
-	}
-
-	public boolean hasMore() {
-		return true;
-	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
