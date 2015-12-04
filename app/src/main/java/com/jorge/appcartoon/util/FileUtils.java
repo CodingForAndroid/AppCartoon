@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -403,5 +404,39 @@ public class FileUtils {
 			return -1;
 		}
 	}
+
+	/**
+	 * 获取文件的大小
+	 *
+	 * @param fileSize 文件的大小
+	 * @return
+	 */
+	public static String FormetFileSize(long fileSize) {// 转换文件大小
+		DecimalFormat df = new DecimalFormat("#.00");
+		String fileSizeString = "";
+		if (fileSize < 1024) {
+			fileSizeString = df.format((double) fileSize) + "B";
+		} else if (fileSize < 1048576) {
+			fileSizeString = df.format((double) fileSize / 1024) + "K";
+		} else if (fileSize < 1073741824) {
+			fileSizeString = df.format((double) fileSize / 1048576) + "M";
+		} else {
+			fileSizeString = df.format((double) fileSize / 1073741824) + "G";
+		}
+		return fileSizeString;
+	}
+
+	public static boolean isValidAttach(String path, boolean inspectSize) {
+		if (!isExistsFile(path) || getFileSize(path) == 0) {
+			LogUtils.d( "isValidAttach: file is not exist, or size is 0");
+			return false;
+		}
+		if (inspectSize && getFileSize(path) > 2 * 1024 * 1024) {
+			LogUtils.d( "file size is too large");
+			return false;
+		}
+		return true;
+	}
+
 
 }

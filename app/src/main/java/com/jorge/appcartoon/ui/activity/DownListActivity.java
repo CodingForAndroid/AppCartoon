@@ -212,6 +212,8 @@ public class DownListActivity extends BaseActivity {
                 /**跳转到下载界面*/
                 Intent  intent=new Intent(DownListActivity.this, DownLoadManageActivity.class);
                 intent.putParcelableArrayListExtra(INTENT_EXTRA_PARCELABLE_ARRAYLIST,list);
+                intent.putExtra(INTENT_EXTRA_COMIC_ID,comic_id);
+                intent.putExtra(INTENT_EXTRA_FIRST_LETTER,first_letter);
                 UIUtils.startActivity(intent);
                 break;
         }

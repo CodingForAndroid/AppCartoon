@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.jorge.appcartoon.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 /**
  * 图片加载工具类
@@ -19,6 +20,9 @@ public class ImageLoaderHelper {
     // 显示图片的设置
     private DisplayImageOptions options;
 
+    private DisplayImageOptions   optionRCorner;
+    /** 圆角图片的默认圆角大小 */
+    public static final int DEF_CORNER_RADIUS = 5 ;
 
     public static ImageLoaderHelper getInstance(){
         if(imageLoaderHelper==null)
@@ -43,6 +47,18 @@ public class ImageLoaderHelper {
                 .bitmapConfig(Bitmap.Config.RGB_565)	 //设置图片的解码类型
                 .build();
         imageLoader = ImageLoader.getInstance();
+
+
+           optionRCorner = new DisplayImageOptions.Builder()
+                .showStubImage(R.mipmap.trans_pic)
+                .showImageForEmptyUri(R.mipmap.trans_pic)
+                .showImageOnFail(R.mipmap.trans_pic)
+                .delayBeforeLoading(IMG_LOAD_DELAY)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .displayer(new RoundedBitmapDisplayer(UIUtils.dip2px(DEF_CORNER_RADIUS)))
+                .build();
     }
 
     /**
@@ -52,6 +68,6 @@ public class ImageLoaderHelper {
      */
     public  void loadImage(String url,ImageView imageView){
          url=url.trim();
-        imageLoader.displayImage(url,imageView,options);
+        imageLoader.displayImage(url,imageView,optionRCorner);
     }
 }
